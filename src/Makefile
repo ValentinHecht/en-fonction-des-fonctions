@@ -1,8 +1,8 @@
 include ../config
 
-all: hello
+all: syntaxe
 
-hello: main-hello.o
+syntaxe: syntaxe.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 
 
