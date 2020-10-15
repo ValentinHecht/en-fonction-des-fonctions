@@ -1,0 +1,4 @@
+# Configuration for make
+CC=gcc
+CFLAGS=-std=c99 -Wall -Wextra -lraylib
+OS=Undef
