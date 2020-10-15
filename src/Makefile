@@ -1,8 +1,8 @@
 include ../config
 
-all: hello
+all: lexical
 
-hello: main-hello.o
+lexical: main-lexical.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 
 
