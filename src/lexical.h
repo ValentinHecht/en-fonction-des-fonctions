@@ -6,20 +6,6 @@
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
 
-#include <stdio.h>
-#include "lexical.h"
+//#include "jeton.h"
 
-char operation[30];
-
-int main(void)
-{
-    printf("Entrez votre fonction : ");
-    scanf("%s", operation);
-    //printf("Vous avez ecrit : %s", operation);
-
-    analyse_lexical(operation);
-
-
-
-    return 0;
-}
+char* analyse_lexical(char*);

@@ -7,19 +7,13 @@
 ********************************************************************************************/
 
 #include <stdio.h>
+//#include "jeton.h"
 #include "lexical.h"
 
-char operation[30];
-
-int main(void)
-{
-    printf("Entrez votre fonction : ");
-    scanf("%s", operation);
-    //printf("Vous avez ecrit : %s", operation);
-
-    analyse_lexical(operation);
+char* analyse_lexical(char* op)  {
+    printf("Vous avez ecrit : %s", op);
 
 
+    return op;
+};
 
-    return 0;
-}

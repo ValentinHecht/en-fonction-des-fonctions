@@ -2,7 +2,7 @@ include ../config
 
 all: lexical
 
-lexical: main-lexical.o
+lexical: main-lexical.o lexical.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 
 
