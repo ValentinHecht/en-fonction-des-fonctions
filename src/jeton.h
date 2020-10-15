@@ -17,7 +17,7 @@ typedef enum{
 
 // Énumération des différents types de fonction existantes
 typedef enum{
-    ABS,SIN,SQRT,LOG,COS,TAN,EXP,ENTIER,VAL_NEG,SINC
+    ABS,SIN,SQRT,LOG,COS,TAN,EXP,ENTIER,VAL_NEG
 } typefonction;
 
 // Énumération des différentes erreurs possible (coté évaluateur)
