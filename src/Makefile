@@ -1,8 +1,8 @@
 include ../config
 
-all: hello
+all: evaluateur
 
-hello: main-hello.o
+evaluateur: evaluateur.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 
 
