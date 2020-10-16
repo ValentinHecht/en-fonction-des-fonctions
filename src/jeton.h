@@ -34,9 +34,9 @@ typedef struct{
     typevaleur valeur;
 }typejeton;
 // Déclaration de l'arbre
-typedef struct Node{
+typedef struct Noeud{
     typejeton jeton;
-    struct Node *pjetonpreced;
-    struct Node *pjetonsuiv;
-}Node;
-typedef Node *Arbre;
+    struct Noeud *pjetonpreced;
+    struct Noeud *pjetonsuiv;
+}Noeud;
+typedef Noeud *Arbre;
