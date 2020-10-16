@@ -1,39 +1,61 @@
 /*******************************************************************************************
 * En fonction des fonctions
 
-* Romain Larramendy, Lucas Bremard, Killian Baert, Valentin Hecht, Thomas Tissier, Maxence Dhaynaut, Benjamin Chane, Louis-Marie Brossard 
+* Romain Larramendy, Lucas Bremard, Killian Baert, Valentin Hecht, Thomas Tissier, Maxence Dhaynaut, Benjamin Chane, Louis-Marie Bossard 
 
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
-#include "jeton.h";
-#include "evaluateur.h";
+#include "jeton.h"
+#include "evaluateur.h"
 #include <math.h>
+#include <ctype.h>
+#include <stdio.h>
+
+#define borne_min -10
+#define borne_sup  10
 
 
 int main(void)
 {
     typejeton jeton1;
     jeton1.lexem=REEL;
-    jeton1.valeur.reel=1.0f;
+    jeton1.valeur.reel=3.14;
     typejeton jeton2;
     jeton2.lexem=OPERATEUR;
-    jeton2.valeur.operateur=PLUS;
+    jeton2.valeur.operateur=DIV;
     typejeton jeton3;
-    jeton3.lexem=REEL;
-    jeton3.valeur.reel=2;
-    Node node;
-    node.jeton=jeton2;
+    jeton3.lexem=VARIABLE;
+    Noeud Noeud;
+    Noeud.jeton=jeton2;
+    Noeud.pjetonpreced= &jeton1;
+    Noeud.pjetonsuiv=&jeton3;
+    float couples[200][2];
+    int tab_compteur = 0;
+    for (float i = borne_min; i <= borne_sup; i++)
+    {
+        couples[tab_compteur][0]=i;
+        couples[tab_compteur][1]=fonc_eval(&Noeud, i);
+        tab_compteur++;
+    }
+    for (int i = 0; i < tab_compteur; i++)
+    {
+        printf("Valeur de x    : %f\n", couples[i][0]);
+        printf("Valeur de f(x) : %f\n", couples[i][1]);
+        printf("\n");
+    }
     
-
     return 0;
 
 }
 
-float fonc_eval(Node *A, float x){
+float fonc_eval(Noeud *A, float x){
+    float y, fils_gauche, fils_droit;
+    
     switch (A->jeton.lexem)
     {
     case FONCTION:
-    float y = fonc_eval(A->pjetonpreced, x);
+    
+    y= fonc_eval(A->pjetonpreced, x);
        
     //SQRT,LOG,COS,TAN,EXP,ENTIER,VAL_NEG,SINC   
         switch (A->jeton.valeur.fonction)
@@ -76,8 +98,8 @@ float fonc_eval(Node *A, float x){
         }
     
     case OPERATEUR:
-        float fils_gauche = fonc_eval(A->pjetonpreced, x);
-        float fils_droit = fonc_eval(A->pjetonsuiv, x);
+        fils_gauche = fonc_eval(A->pjetonpreced, x);
+        fils_droit = fonc_eval(A->pjetonsuiv, x);
         
         switch (A->jeton.valeur.operateur)
         {
@@ -102,8 +124,12 @@ float fonc_eval(Node *A, float x){
                 break;
         }
 
-    case REEL : case VARIABLE:
+    case REEL :
         return A->jeton.valeur.reel;
+        break;
+    
+    case VARIABLE:
+        return x;
         break;
 
     case ERREUR:
