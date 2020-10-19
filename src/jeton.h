@@ -70,10 +70,9 @@ typedef struct
     typevaleur valeur;
 } typejeton;
 // Déclaration de l'arbre
-typedef struct Noeud
-{
+typedef struct Noeud{
     typejeton jeton;
     struct Noeud *pjetonpreced;
     struct Noeud *pjetonsuiv;
-} Noeud;
+}Noeud;
 typedef Noeud *Arbre;
