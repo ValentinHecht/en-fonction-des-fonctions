@@ -2,7 +2,7 @@
 #include "jeton.h"
 
 
-Node *syntaxe (typejeton tabJeton[], int position) {
+Node *syntaxe (Jeton tabJeton[], int position) {
 
     // sin(x+2)
     // sin(x++3))
@@ -18,7 +18,7 @@ Node *syntaxe (typejeton tabJeton[], int position) {
     size_t length = sizeof(tabJeton);
 
     while (i != length) {
-        switch (jeton.erreur)
+        switch (tabJeton[i])
         {
         case tabJeton[i].jeton :
             
@@ -31,3 +31,22 @@ Node *syntaxe (typejeton tabJeton[], int position) {
     
     return arbre;
 }
+
+int contains (Jeton tab[], typejeton jeton) {
+    int occ = 0;
+
+    for (int i = 0; i < sizeof(tab); i++) {
+        if (tab[i].lexem == jeton.lexem) {
+            occ++;
+        } else if (tab[i].operateur == jeton.valeur.operateur) {
+            occ++;
+        }
+    } 
+    
+    return occ;
+}
+
+// précédent : 
+// suivant : 
+
+// Retourner le jeton d'erreur

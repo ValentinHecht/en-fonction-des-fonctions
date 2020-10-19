@@ -24,7 +24,7 @@ typedef enum{
 
 // Énumération des différentes erreurs possible (coté évaluateur)
 typedef enum{
-    DIV_ZERO
+    DIV_ZERO, SQRT_NEG, PAR_NONFERM, PAR_NONOUVER, DOUBLE_OPE, ORTO_FONC, MAJ_FONC, BAR_NONFERME
 } typeerreur;
 
 // Énumération des différents types de valeurs existantes
@@ -33,13 +33,29 @@ typedef union{
     typefonction fonction;
     typeoperateur operateur;
     typeerreur erreur;
-} typejeton;
+} typevaleur;
 
 // Énumération des différents types de jetons existants
+typedef struct{
+    typelexem lexem;
+    typevaleur valeur;
+}typejeton;
+
+// Déclaration de l'arbre
 typedef struct Node{
     typejeton jeton;
     struct Node *pjetonpreced;
     struct Node *pjetonsuiv;
 } Node;
+
+//Structure lexem
+typedef struct Jeton {
+    typelexem lexem;
+    float reel;
+    char var;
+    typefonction fonction;
+    typeoperateur operateur;
+    typeerreur erreur;
+} Jeton;
 
 typedef Node *Arbre;
