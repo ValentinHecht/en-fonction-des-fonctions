@@ -1,74 +1,43 @@
 #include <stdio.h>
+#include "jeton.h"
+#include <math.h>
 
+Node *syntaxe(typejeton tabJeton[], int position) {
+
+typejeton jeton;
+
+Node *arbre = NULL;
+
+int i = 0;
+size_t lenght = sizeof(tabJeton);
+
+while (i != lenght) {
+
+// erreur 104 double opérateur.
+
+typejeton double_ope;
+double_ope.lexem = OPERATEUR;
+
+for(i=0; i<sizeof(tabJeton); i++) {
+
+      if(tabJeton[i].valeur.operateur == tabJeton[i+1].valeur.operateur) {
+
+        typejeton erreur_ope;
+        erreur_ope.lexem = ERREUR;
+
+        erreur_ope.valeur.erreur = DOUBLE_OPE;
+
+      }
+}
+
+}
+
+return arbre;
+
+}
 
 int main() {
 
-Noeud*syntax(fg, fd, jeton);
-Noeud*Arbre = NULL;
-Noeud*temp;
-int i=0, j=0;
-
-while (tab[i].lexeme)
-
-    switch (tab[j].lexeme) {
-
-    case Reel : case Var; :
-
-    {
-
-    Arbre = creerNoeud(tab[j], NULL, NULL);
-
-    j++;
-
-    break;
-
-    }
-
-    case oper : {
-
-    i* = j++;
-
-    temp = syntax(tab[j], i);
-    Arbre = creerNoeud(tab[j], Arbre, temp);
-
-    break;
-
-    }
-
-    case function {
-
-    i* = j++;
-
-    temp = syntax(tab[j], i)
-    Arbre = creerNoeud(tab[j], temp, NULL);
-
-    j++;
-
-    break;
-
-    }
-
-    case par_ouv {
-
-        j++;
-
-        Arbre = syntax(tab[j], j);
-
-    break;
-
-    }
-
-    case par_fer {
-
-        j++;
-
-        Arbre = syntax(tab[j], j);
-
-    break;
-
-    }
-
-    }
-
-    return 0;
+return 0;
 }
+
