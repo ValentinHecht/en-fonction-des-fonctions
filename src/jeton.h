@@ -9,7 +9,7 @@
 
 // Énumération des différents types de lexems existants
 typedef enum{
-    REEL, OPERATEUR, FONCTION, ERREUR, FIN, PAR_OUV, PAR_FERM, VARIABLE, BAR_OUV, BAR_FERM, ABSOLU
+    REEL, OPERATEUR, FONCTION, ERREUR, FIN, PAR_OUV, PAR_FERM, VARIABLE, BARRE, ABSOLU
 } typelexem;
 
 // Énumération des différents types d'opérateur existants
@@ -19,12 +19,12 @@ typedef enum{
 
 // Énumération des différents types de fonction existantes
 typedef enum{
-    ABS,SIN,SQRT,LOG,COS,TAN,EXP,ENTIER,VAL_NEG,SINC
+    ABS, SIN, SQRT, LOG, COS, TAN, EXP, ENTIER, VAL_NEG, SINC
 } typefonction;
 
 // Énumération des différentes erreurs possible (coté évaluateur)
 typedef enum{
-    DIV_ZERO, SQRT_NEG, PAR_NONFERM, PAR_NONOUVER, DOUBLE_OPE, ORTO_FONC, MAJ_FONC, BAR_NONFERME
+    DIV_ZERO, SQRT_NEG, PAR_NONFERM, PAR_NONOUVER, DOUBLE_OPE, ORTO_FONC, MAJ_FONC, BAR_ABS
 } typeerreur;
 
 // Énumération des différents types de valeurs existantes
@@ -52,7 +52,6 @@ typedef struct Node{
 typedef struct Jeton {
     typelexem lexem;
     float reel;
-    char var;
     typefonction fonction;
     typeoperateur operateur;
     typeerreur erreur;
