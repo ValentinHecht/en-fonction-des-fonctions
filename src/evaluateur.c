@@ -101,6 +101,10 @@ float fonc_eval(Noeud *A, float x)
         case BAR_NONFERME: // Bar d'absolu non ferme
             return 107;
             break;
+        
+        case VIRGULE: // Virgule au lieu du point
+            return 108;
+            break;
         }
 
         // Détection d'une fonction        
