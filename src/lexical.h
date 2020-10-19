@@ -6,4 +6,4 @@
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
 
-char* analyse_lexical(char*);
+Jeton* analyse_lexical(char*);

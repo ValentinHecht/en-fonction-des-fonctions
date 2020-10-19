@@ -17,7 +17,7 @@ int jeton = 0;
 
 Jeton jetons[25];
 
-char* analyse_lexical(char* op)  {
+Jeton* analyse_lexical(char* op)  {
     //printf("Vous avez ecrit : ");
 
     while(op[i] != '\0') {
@@ -38,7 +38,15 @@ char* analyse_lexical(char* op)  {
         
         //////////////////////// RECHERCHE DES FONCTIONS ////////////////////////
         
-        else if ((op[i] == 's' && op[i+1] == 'i' && op[i+2] == 'n') || (op[i] == 'S' && op[i+1] == 'I' && op[i+2] == 'N')) {
+        else if ((op[i] == 'a' && op[i+1] == 'b' && op[i+2] == 's') || (op[i] == 'A' && op[i+1] == 'B' && op[i+2] == 'S')) {
+            puts("Fonction ABS detecte !");
+            Jeton jetonabs;
+            jetonabs.lexem = FONCTION;
+            jetonabs.fonction = ABS;
+            jetons[jeton] = jetonabs;
+            jeton++;
+            i = i+3;
+        } else if ((op[i] == 's' && op[i+1] == 'i' && op[i+2] == 'n') || (op[i] == 'S' && op[i+1] == 'I' && op[i+2] == 'N')) {
             puts("Fonction SIN detecte !");
             Jeton jetonsin;
             jetonsin.lexem = FONCTION;
@@ -128,7 +136,6 @@ char* analyse_lexical(char* op)  {
             int y = i;
             int indice = 0;
             char tabreel[10];
-            int test;
             while(isdigit(op[y]) || op[y] == '.') {
                 printf("Variable detecte (ou virgule) ! : %c \n", op[y]);
                 tabreel[indice] = op[y];
@@ -164,23 +171,45 @@ char* analyse_lexical(char* op)  {
             jetons[jeton] = jetonoperateur;
             i++;
             jeton++;
+        } 
+        
+        //////////////////////// RECHERCHE SYMBOLE ABSOLU ////////////////////////
+        
+        else if (op[i] == '|') {
+            puts("Absolu detecte !");
+            Jeton jetonabsolu;
+            jetonabsolu.lexem = ABSOLU;
+            jetons[jeton] = jetonabsolu;
+            jeton++;
+            i++;
         } else if (isspace(op[i])) {
             puts("Espace detecte !");
             i++;
         } else {
             puts("ERREUR");
+            Jeton jetonerreur;
+            jetonerreur.lexem = ERREUR;
+            jetons[jeton] = jetonerreur;
+            jeton++;
             i++;
         }
 
     }
 
     puts("FIN detecte !");
+    Jeton jetonfin;
+    jetonfin.lexem = FIN;
+    jetons[jeton] = jetonfin;
 
-    for(int u = 0; u !=3; u++){
-        printf("%i", jetons[u].lexem);
+
+    int test = 0;
+    while(test != sizeof(jetons)/sizeof(jetons[0])){
+        printf("\nTest du tableau | Lexem : %i", jetons[test].lexem);
+        test++;
     }
 
 
-    return op;
+
+    return jetons;
 };
 
