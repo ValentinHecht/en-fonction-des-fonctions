@@ -8,7 +8,6 @@
 #include "jeton.h"
 #include "evaluateur.h"
 #include <math.h>
-#include <ctype.h>
 
 #define borne_min -10
 #define borne_sup 10

@@ -76,3 +76,15 @@ typedef struct Noeud{
     struct Noeud *pjetonsuiv;
 }Noeud;
 typedef Noeud *Arbre;
+typedef struct Noeud{
+    typejeton jeton;
+    struct Noeud *pjetonpreced;
+    struct Noeud *pjetonsuiv;
+}Noeud;
+typedef Noeud *Arbre;
+typedef struct Noeud{
+    typejeton jeton;
+    struct Noeud *pjetonpreced;
+    struct Noeud *pjetonsuiv;
+}Noeud;
+typedef Noeud *Arbre;
