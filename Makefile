@@ -9,7 +9,8 @@ unix:
 	@echo "generate Bath config"
 	@echo "# Configuration for make" > config
 	@echo "CC=gcc" >> config
-	@echo "CFLAGS=-std=c99 -Wall -Wextra " >> config
+	@echo "CFLAGS=-std=c99 -Wall -Wextra -lraylib" >> config
+	@echo "LIBS= -lraylib" >> config
 	@echo "OS=`uname`"  >> config
 
 windows: 
@@ -18,6 +19,7 @@ windows:
 	@echo OS=Windows >> config
 	@echo CC=gcc >> config
 	@echo CFLAGS=-std=c99 -Wall -Wextra` >> config
+	@echo LIBS= -lraylib >> config
 
 clean:
 	@make -C src clean

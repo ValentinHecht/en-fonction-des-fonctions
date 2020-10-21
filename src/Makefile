@@ -1,12 +1,12 @@
 include ../config
 
+all: hello
 
-
-opengltest: opengltest.c
-	$(CC) -o ../efdf-$@ $^ $(LIBS)
+hello: testgui.o
+	$(CC) `pkg-config gtk+-2.0 --cflags` -o ../en-fonction-des-fonctions $^ $(LIBS) `pkg-config gtk+-2.0 --libs`
 
 %.o: %.c
-	$(CC) -c $< $(CFLAGS)
+	$(CC) `pkg-config gtk+-2.0 --cflags` -c $< $(CFLAGS) `pkg-config gtk+-2.0 --libs` -lm
 
 config:
 	rm config
@@ -15,16 +15,4 @@ config:
 clean:
 	rm -rf *.o
 
-*/
-gcc -c pbPlots.c -std=c99 -O3 -march=native
-gcc -c supportLib.c -std=c99 -O3 -march=native
-gcc -c example1.c -std=c99 -O3 -march=native
-gcc -c example2.c -std=c99 -O3 -march=native
-gcc -c example3.c -std=c99 -O3 -march=native
-gcc example1.o pbPlots.o supportLib.o -lm -o example1
-gcc example2.o pbPlots.o supportLib.o -lm -o example2
-gcc example3.o pbPlots.o supportLib.o -lm -o example3
-strip example1
-strip example2
-strip example3
-/*
+
