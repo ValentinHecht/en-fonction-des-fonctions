@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "jeton.h"
 
-
-Node *syntaxe (Jeton tabJeton[]) {
+Node *syntaxe(Jeton tabJeton[])
+{
 
     // sin(x+2)
     // sin(x++3))
@@ -10,113 +10,145 @@ Node *syntaxe (Jeton tabJeton[]) {
 
     // fonction, variable, opérande, réel
 
+
+
     typejeton jeton;
 
     Node *arbre;
     arbre = malloc(sizeof(*arbre));
 
     int i = 0;
-    size_t length = sizeof(tabJeton);
+    size_t length = sizeof(tabJeton)/sizeof(tabJeton[0]);
 
-    while (i != length) {
+    // erreur 102-103
+    typejeton ouverte;
+    ouverte.lexem = PAR_OUV;
+    int ouvrir = contains(tabJeton, ouverte);
+    typejeton ferme;
+    ferme.lexem = PAR_FERM;
+    int fermer = contains(tabJeton, ferme);
+
+    // erreur 104
+    typejeton double_ope;
+    double_ope.lexem = OPERATEUR;
+    typejeton erreur_ope;
+
+    // erreur 107
+    typejeton barre;
+    barre.lexem = BARRE;
+    int doublon_absolu = contains(tabJeton, ouverte);
+
+    while (i != length)
+    {
 
         // Au début de la boucle, ajoute dans l'arbre le suivant
 
-
-
-
         // test erreur 100 (division par 0)
-        if (tabJeton[i].operateur == DIV 
-        && tabJeton[i+1].reel == 0) {
+        if (tabJeton[i].operateur == DIV && tabJeton[i + 1].reel == 0)
+        {
             arbre->jeton.valeur.erreur = DIV_ZERO;
         }
 
+        // test erreur 102 - 103 (parenthèse)
+        if (ouvrir > fermer)
+            arbre->jeton.valeur.erreur = PAR_NONFERM;
+        else if (fermer > ouvrir)
+            arbre->jeton.valeur.erreur = PAR_NONOUVER;
 
-//         // test erreur 102 - 103 (parenthèse)
-//         typejeton ouverte; 
-//         ouverte.lexem=PAR_OUV;
-//         int ouvrir = contains(tabJeton, ouverte);
-//         typejeton ferme; 
-//         ferme.lexem=PAR_OUV;
-//         int fermer = contains(tabJeton, ferme);
-        
-//         if (ouvrir > fermer) arbre[i].jeton.valeur.erreur = PAR_NONFERM;
-//         else if (fermer > ouvrir) arbre[i].jeton.valeur.erreur = PAR_NONOUVER;
+        // test erreur 104 (double opérande)
+        if (tabJeton[i].operateur == tabJeton[i + 1].operateur)
+        {
+            arbre->jeton.lexem = ERREUR;
+            arbre->jeton.valeur.erreur = DOUBLE_OPE;
+        }
 
+        // test erreur 107 (Barre non fermée pour val abs)
+        if (doublon_absolu % 2 != 0)
+            arbre[i].jeton.valeur.erreur = BAR_ABS;
 
-//         // test erreur 104 (double opérande)
-//         typejeton double_ope;
-//         double_ope.lexem = OPERATEUR;
-
-//         for(i=0; i<sizeof(tabJeton); i++) {
-            
-//             if(tabJeton[i].operateur == tabJeton[i+1].operateur) {
-//                 typejeton erreur_ope;
-//                 erreur_ope.lexem = ERREUR;
-//                 erreur_ope.valeur.erreur = DOUBLE_OPE;
-//             }
-// }
-
-
-//         // test erreur 107 (Barre non fermée pour val abs)
-//         typejeton barre;
-//         barre.lexem = BARRE;
-//         int doublon_absolu = contains(tabJeton, ouverte);
-
-//         if (doublon_absolu % 2 != 0) arbre[i].jeton.valeur.erreur = BAR_ABS;
-    i++;
+        i++;
     }
-    
+
     return arbre;
 }
 
-
-
-int contains (Jeton tab[], typejeton jeton) {
+int contains(Jeton tab[], typejeton jeton)
+{
     int occ = 0;
 
-    for (int i = 0; i < sizeof(tab); i++) {
-        if (tab[i].lexem == jeton.lexem) {
-            occ++;
-        } else if (tab[i].operateur == jeton.valeur.operateur) {
+    for (int i = 0; i < sizeof(tab); i++)
+    {
+        if (tab[i].lexem == jeton.lexem)
+        {
             occ++;
         }
-    } 
-    
+        else if (tab[i].operateur == jeton.valeur.operateur)
+        {
+            occ++;
+        }
+    }
+
     return occ;
 }
 
+int main()
+{
+    // test tab
+    Jeton tab[5];
+    tab[0].lexem = BARRE;
+    tab[1].lexem = PAR_OUV;
+    tab[2].lexem = REEL;
+    tab[3].lexem = PAR_FERM;
+    tab[4].lexem = BARRE;
 
-
-int main () {
-    Jeton tab[10];
-
-    tab[1].reel = 0;
-    tab[0].operateur = DIV;
 
     Node *arbre;
+    size_t length = sizeof(tab)/sizeof(tab[0]);
+    int i;
+
     arbre = syntaxe(tab);
 
-    for (int i = 0; i < sizeof(tab); i++) {
-        if (tab[i].operateur == DIV 
-        && tab[i+1].reel == 0) {
-            printf("salut\n");
+    
+    for (i = 0; i < length; i++)
+    {
+        if (arbre->jeton.valeur.erreur == DIV_ZERO)
+        {
+            printf("erreur 100 : division zero");
+            break;
         }
-        if (arbre->jeton.valeur.erreur == DIV_ZERO) {
-            printf("affiche");
+
+        if (arbre->jeton.valeur.erreur == PAR_NONOUVER)
+        {
+            printf("erreur 102 : parenthese non ouverte");
+            break;
+        }
+        else if (arbre->jeton.valeur.erreur == PAR_NONFERM)
+        {
+            printf("erreur 103 : parenthèse non ferme");
+            break;
+        }
+
+        if (arbre->jeton.valeur.erreur == DOUBLE_OPE)
+        {
+            printf("erreur 104 : double operande");
+            break;
+        }
+
+        if (arbre->jeton.valeur.erreur == BAR_ABS)
+        {
+            printf("erreur 107 : double barre => valeur absolue non ouverte/ ferme");
             break;
         }
     }
 
+    if (i == length) printf("OK !");
 
-    // if (tab[0].operateur == PLUS) printf("Hello");
-
-    // printf("%d | %f | %f", tab[0], tab[0].lexem, tab[0].operateur);
+    printf("\n\n\nFin du programme...\n\n");
 
     return 0;
 }
 
-// précédent : 
-// suivant : 
+// précédent :
+// suivant :
 
 // Retourner le jeton d'erreur

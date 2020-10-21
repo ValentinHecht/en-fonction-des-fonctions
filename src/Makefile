@@ -4,7 +4,7 @@ all: syntaxe
 
 syntaxe: syntaxe.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
-
+	../efdf-$@
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)
