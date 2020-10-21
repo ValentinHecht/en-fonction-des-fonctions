@@ -39,7 +39,7 @@ typedef union{
 typedef struct{
     typelexem lexem;
     typevaleur valeur;
-}typejeton;
+} typejeton;
 
 // Déclaration de l'arbre
 typedef struct Node{
