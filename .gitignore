@@ -1,0 +1,11 @@
+# Directory:
+
+build
+raylib
+
+# Generated files:
+
+en-fonction-des-fonction.*
+config
+*.o
+.json
