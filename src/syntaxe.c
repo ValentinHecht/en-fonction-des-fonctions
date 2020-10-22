@@ -3,11 +3,10 @@
 
 int is_inPar(int debut[], int fin[], int pos) {
     // On suppose que debut.length == fin.length
-
     size_t length = sizeof(debut)/sizeof(debut[0]);
 
     for (int i = 0; i < length; i++) {
-        // c'est dans la parenthese
+        // c'est dans la parenthese/fonction
         if (debut[i] < pos && pos < fin[i]) {
             return 0;
         }
@@ -18,7 +17,6 @@ int is_inPar(int debut[], int fin[], int pos) {
 
 
 void create_tree(Jeton tabJeton[]) {
-
     Node *arbre;
     Node *nodeActuel;
 
@@ -45,6 +43,8 @@ void create_tree(Jeton tabJeton[]) {
 
     size_t length = sizeof(tabJeton)/sizeof(tabJeton[0]);
 
+    Jeton tab [10][20][length];
+
     // Récupère les positions de tout les jetons
     for (int i = 0; i < length; i++) {
         if (tabJeton[i].lexem == FONCTION) debut_fonction[df] = i, df++;
@@ -55,17 +55,20 @@ void create_tree(Jeton tabJeton[]) {
         if (tabJeton[i].lexem == OPERATEUR) operande[v] = i, o++;
         if (tabJeton[i].lexem == REEL) reel[v] = i, r++;
         if (tabJeton[i].lexem == VARIABLE) var[v] = i, v++;
+
+        tab[0][0][i] = tabJeton[i];
     }
 
 
     // On crée le premier node de l'arbre
-    arbre->layer = 0;
-    arbre->pjetonparent = NULL;
+    arbre->couche = 0;
+    arbre->colonne = 0;
+    arbre->pjetonparent = -1;
     // si l'expression ne contient qu'une fonction..
     if (fin_fonction[0] == length) {
         arbre->jeton.lexem == tabJeton[debut_fonction[0]].lexem;
         arbre->jeton.valeur.fonction == tabJeton[debut_fonction[0]].fonction;
-        debut_fonction[0] = NULL;
+        debut_fonction[0] = -1;
     }
     // sinon on prend le premier opérateur
     else {
@@ -75,14 +78,23 @@ void create_tree(Jeton tabJeton[]) {
         }
         arbre->jeton.lexem == tabJeton[operande[i]].lexem;
         arbre->jeton.valeur.operateur == tabJeton[operande[i]].operateur;
-        operande[i] = NULL;
+        operande[i] = -1;
     }
 
+    
+    tab[0][0][1] = tabJeton[1];
     // sin(x+3)+6
     // sin(x+3)6
     // (x+3)6
     // x
+}
 
+void reste(Jeton tabJeton[], Node *arbre) {
+
+}
+
+void print_tree(Node *arbre) {
+    
 }
 
 Node *syntaxe(Jeton tabJeton[])
@@ -121,14 +133,15 @@ Node *syntaxe(Jeton tabJeton[])
         // test erreur 100 (division par 0)
         if (tabJeton[i].operateur == DIV && tabJeton[i + 1].reel == 0)
         {
+            arbre->jeton.lexem = ERREUR;
             arbre->jeton.valeur.erreur = DIV_ZERO;
         }
 
         // test erreur 102 - 103 (parenthèse)
         if (ouvrir > fermer)
-            arbre->jeton.valeur.erreur = PAR_NONFERM;
+            arbre->jeton.valeur.erreur = PAR_NONFERM, arbre->jeton.lexem = ERREUR;
         else if (fermer > ouvrir)
-            arbre->jeton.valeur.erreur = PAR_NONOUVER;
+            arbre->jeton.valeur.erreur = PAR_NONOUVER, arbre->jeton.lexem = ERREUR;
 
         // test erreur 104 (double opérande)
         if (tabJeton[i].operateur == tabJeton[i + 1].operateur)
@@ -139,7 +152,8 @@ Node *syntaxe(Jeton tabJeton[])
 
         // test erreur 107 (Barre non fermée pour val abs)
         if (doublon_absolu % 2 != 0)
-            arbre[i].jeton.valeur.erreur = BAR_ABS;
+            arbre->jeton.lexem = ERREUR;
+            arbre->jeton.valeur.erreur = BAR_ABS;
 
         i++;
     }
@@ -211,30 +225,31 @@ void test_erreur(Node *arbre, Jeton tab[]) {
 int main()
 {
     // test tab
-    Jeton tab[5];
-    tab[0].lexem = BARRE;
-    tab[1].lexem = PAR_OUV;
-    tab[2].lexem = REEL;
-    tab[3].lexem = PAR_FERM;
-    tab[4].lexem = BARRE;
+    // Jeton tab[5];
+    // tab[0].lexem = BARRE;
+    // tab[1].lexem = PAR_OUV;
+    // tab[2].lexem = REEL;
+    // tab[3].lexem = PAR_FERM;
+    // tab[4].lexem = BARRE;
 
 
-    Node *arbre;
-    size_t length = sizeof(tab)/sizeof(tab[0]);
-    int i;
+    // Node *arbre;
+    // size_t length = sizeof(tab)/sizeof(tab[0]);
+    // int i;
 
 
-    arbre = syntaxe(tab);
+    // arbre = syntaxe(tab);
 
-    test_erreur(arbre, tab);
+    // test_erreur(arbre, tab);
+
+    Node *arbre = -1;
+    Node *arbre2 = -1;
+    int i = NULL;
+
+    printf("%d     %d", arbre,arbre2);
     
 
     printf("\n\n\nFin du programme...\n\n");
 
     return 0;
 }
-
-// précédent :
-// suivant :
-
-// Retourner le jeton d'erreur

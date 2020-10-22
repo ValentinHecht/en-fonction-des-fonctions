@@ -47,7 +47,8 @@ typedef struct Node{
     struct Node *pjetonpreced;
     struct Node *pjetonsuiv;
     struct Node *pjetonparent;
-    int layer;
+    int colonne;
+    int couche;
 } Node;
 
 //Structure lexem
