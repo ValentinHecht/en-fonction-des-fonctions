@@ -3,10 +3,9 @@ include ../config
 all: hello
 
 hello: testgui.o
-	$(CC) `pkg-config gtk+-2.0 --cflags` -o ../en-fonction-des-fonctions $^ $(LIBS) `pkg-config gtk+-2.0 --libs`
-
+	$(CC) -o ../en-fonction-des-fonctions $^ $(LIBS) -g
 %.o: %.c
-	$(CC) `pkg-config gtk+-2.0 --cflags` -c $< $(CFLAGS) `pkg-config gtk+-2.0 --libs` -lm
+	$(CC) -c $< $(CFLAGS)
 
 config:
 	rm config
