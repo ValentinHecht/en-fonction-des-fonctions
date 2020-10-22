@@ -8,4 +8,4 @@ raylib
 en-fonction-des-fonction.*
 config
 *.o
-.json
+*.json
