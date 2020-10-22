@@ -46,6 +46,8 @@ typedef struct Node{
     typejeton jeton;
     struct Node *pjetonpreced;
     struct Node *pjetonsuiv;
+    struct Node *pjetonparent;
+    int layer;
 } Node;
 
 //Structure lexem
