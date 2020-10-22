@@ -8,3 +8,5 @@ en-fonction-des-fonction.*
 config
 *.o
 *.json
+.vscode
+*.vscode
