@@ -2,7 +2,7 @@ include ../config
 
 all: syntaxe
 
-syntaxe: syntaxe.o
+syntaxe: newsyntaxe.o main.o
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 	../efdf-$@
 
@@ -15,5 +15,3 @@ config:
 
 clean:
 	rm -rf *.o
-
-
