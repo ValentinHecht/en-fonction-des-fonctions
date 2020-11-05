@@ -22,7 +22,6 @@ int longueur(int tab[]) {
 
 int *fourchette_operateur(int debut[], int fin[], int length, int pos) {
     // On suppose que debut.length == fin.length
-
     int ok[length];
     init_tab(ok, length);
     int o = 0;
@@ -36,7 +35,7 @@ int *fourchette_operateur(int debut[], int fin[], int length, int pos) {
             } else if (fin[m] > debut[n]) {
                 ok[m] = debut[n];
                 break;
-            } 
+            }
         }
         printf("\n------------------- ok: %d ----------------", ok[m]);
     }
@@ -50,19 +49,17 @@ int *fourchette_operateur(int debut[], int fin[], int length, int pos) {
             break;
         }
     }
-
     return fourchette;
 }
 
-Node *create_tree(Jeton *tabJeton, int elem) {
-    Node *arbre;
-    Node *nodeActuel; 
+Node *create_node(Jeton *tabJeton, int elem, int *position) {
+    Node *node;
 
     for (int k = 0; k < elem; k++) {
         printf("%d\n",tabJeton[k].lexem);
     }
 
-    arbre = malloc(sizeof(*arbre));
+    node = malloc(sizeof(*node));
 
     // tab [couche] [colonne] [tableau de jeton du node concerné]
     //Jeton tab [10][20][length];
@@ -107,19 +104,12 @@ Node *create_tree(Jeton *tabJeton, int elem) {
         //tab[0][0][i] = tabJeton[i];
     }
 
-    // On crée le premier node de l'arbre
-    arbre->couche = 0;
-    arbre->colonne = 0;
-    arbre->pjetonparent = -1;
-
-    int marque_page;
     // si l'expression ne contient qu'une fonction..
     if (debut_fonction[0] == 0 && fin_fonction[0] == elem-1) {
-        arbre->jeton.lexem = tabJeton[debut_fonction[0]].lexem;
-        arbre->jeton.valeur.fonction = tabJeton[debut_fonction[0]].fonction;
+        node->jeton.lexem = tabJeton[debut_fonction[0]].lexem;
+        node->jeton.valeur.fonction = tabJeton[debut_fonction[0]].fonction;
         printf("\n\nPOSITION DU JETON: 0");
-        marque_page = 0;
-        debut_fonction[0] = -1;
+        *position = 0;
     }
     // sinon on prend le premier opérateur entre les parenthèse
     else if (o != 0 && dp > 1) {
@@ -130,25 +120,88 @@ Node *create_tree(Jeton *tabJeton, int elem) {
         f = fourchette_operateur(debut_parenthese, fin_parenthese, length, operande[i]);
 
         for (int j = *f; j < *(f+1); j++) {
-            if(tabJeton[j].lexem == OPERATEUR) {
-                arbre->jeton.lexem = tabJeton[j].lexem;
-                arbre->jeton.valeur.operateur = tabJeton[j].operateur;
+            if(tabJeton[j].lexem 
+            == OPERATEUR) {
+                node->jeton.lexem = tabJeton[j].lexem;
+                node->jeton.valeur.operateur = tabJeton[j].operateur;
                 printf("\n\nPOSITION DU JETON: %d", j);
-                marque_page = j;
+                *position = j;
                 break;
             }
         }
     } 
     // pas de parenthèse (ou parenthèse inutile), on prend le premier opérateur
     else if (o != 0) {
-        arbre->jeton.lexem = tabJeton[operande[0]].lexem;
-        arbre->jeton.valeur.operateur = tabJeton[operande[0]].operateur;
+        node->jeton.lexem = tabJeton[operande[0]].lexem;
+        node->jeton.valeur.operateur = tabJeton[operande[0]].operateur;
         printf("\n\nPOSITION DU JETON: %d", operande[0]);
-        marque_page = operande[0];
+        *position = operande[0];
+    }
+    // un réel ou un entier
+    else if (o == o) {
+        int nbVal = 0;
+        Jeton val[5];
+        char nombre[6];
+        for (int j = 0; j < elem; j++) {
+            if (tabJeton[j].lexem == REEL) {
+                val[nbVal].lexem = tabJeton[j].lexem;
+                gcvt(tabJeton[j].reel, 1, nombre[j]);
+                nbVal++;
+            } else if (tabJeton[j].lexem == VARIABLE) {
+                node->jeton.lexem = tabJeton[j].lexem;
+            }
+        }
+        for (int v = 0; v = nbVal; v++) {
+            
+        }
+    }
+
+    printf("\n\n\n");
+
+    return node;
+}
+
+Node *create_tree(Jeton *expression, int elem) {
+    Node *arbre;
+    Node *nodeActuel;
+
+    arbre = malloc(sizeof(*arbre));
+
+    // tab [couche] [colonne] [tableau de jeton du node concerné]
+    Jeton memoire [10][20][elem];
+
+    int position = -1;
+
+    int i = 1;
+    while(1) {
+        for (int j = 0; j < i; j++) {
+            nodeActuel = create_node(expression, elem, &position);
+
+            nodeActuel->colonne = j;
+            if (i == 1) {
+                nodeActuel->pjetonparent = -1;
+                nodeActuel->couche = i-1;
+                arbre = nodeActuel;
+            } else {
+                nodeActuel->couche = nodeActuel->pjetonparent->couche+1;
+            }
+
+            //for (int k = 0; k < )
+
+            printf("\ncouche : %d\ncolonne : %d\n", arbre->couche, arbre->colonne);
+            printf("\ncode lexem: %d\ncode valeur: %d\n", arbre->jeton.lexem, arbre->jeton.valeur.operateur);
+            printf("\nLa position du jeton est a la %d\n", position);
+            free(nodeActuel);
+        }
+        i *= 2;
+        break;
     }
 
     return arbre;
 }
+
+
+
 
 
 
