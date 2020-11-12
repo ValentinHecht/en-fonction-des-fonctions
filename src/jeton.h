@@ -53,7 +53,8 @@ typedef enum
     ORTO_FONC,
     MAJ_FONC,
     BAR_NONFERME,
-    VIRGULE
+    VIRGULE,
+    OPE_PAR
 } typeerreur;
 // Énumération des différents types de valeurs existantes
 typedef union
@@ -70,18 +71,6 @@ typedef struct
     typevaleur valeur;
 } typejeton;
 // Déclaration de l'arbre
-typedef struct Noeud{
-    typejeton jeton;
-    struct Noeud *pjetonpreced;
-    struct Noeud *pjetonsuiv;
-}Noeud;
-typedef Noeud *Arbre;
-typedef struct Noeud{
-    typejeton jeton;
-    struct Noeud *pjetonpreced;
-    struct Noeud *pjetonsuiv;
-}Noeud;
-typedef Noeud *Arbre;
 typedef struct Noeud{
     typejeton jeton;
     struct Noeud *pjetonpreced;

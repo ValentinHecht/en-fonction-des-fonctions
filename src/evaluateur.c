@@ -12,6 +12,9 @@
 #define borne_min -10
 #define borne_sup 10
 
+int error = 0;
+char *cause [];
+
 int main(void)
 {
 
@@ -37,24 +40,28 @@ int main(void)
     noeud_1.pjetonpreced=&noeud_2;
     noeud_1.pjetonsuiv=&jeton4;
 
- 
-
+    cause[0] = 'lol';
+    error = 1;
 
     float couples[200][2];
     int tab_compteur = 0;
-    for (float i = borne_min; i <= borne_sup; i++)
-    {
-        couples[tab_compteur][0] = i;                       // Valeurs de x
-        couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
-        tab_compteur++;
+    if(!error){
+        for (float i = borne_min; i <= borne_sup; i++)
+        {
+            couples[tab_compteur][0] = i;                       // Valeurs de x
+            couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
+            tab_compteur++;
+        }
+        for (int i = 0; i < tab_compteur; i++)
+        {
+            printf("Valeur de x    : %f\n", couples[i][0]);
+            printf("Valeur de f(x) : %f\n", couples[i][1]);
+            printf("\n");
+        }
     }
-    for (int i = 0; i < tab_compteur; i++)
-    {
-        printf("Valeur de x    : %f\n", couples[i][0]);
-        printf("Valeur de f(x) : %f\n", couples[i][1]);
-        printf("\n");
+    else{
+        printf("%s\n", &cause[0]);
     }
-
     return 0;
 }
 
@@ -103,6 +110,10 @@ float fonc_eval(Noeud *A, float x)
         
         case VIRGULE: // Virgule au lieu du point
             return 108;
+            break;
+
+        case OPE_PAR: // Oubli de l'operateur entre des parentheses
+            return 109;
             break;
         }
 
