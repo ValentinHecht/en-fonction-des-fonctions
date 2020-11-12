@@ -1,4 +1,6 @@
-#include <gtk/gtk.h> 
+#include <gtk/gtk.h>
+#include "pbPlots.h"
+#include "supportLib.h"
 
 static int counter = 0;
 static char input_function[500];
@@ -97,7 +99,9 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
 
     gtk_box_pack_start(GTK_BOX(hbox3), fonction, TRUE, FALSE, 50);
 
-    image = gtk_image_new_from_file ("src/example1.png");
+    wait(graph_draw());
+
+    image = gtk_image_new_from_file ("src/graph.png");
 
     gtk_box_pack_start(GTK_BOX(vbox), hbox3, FALSE, FALSE, 5);
     gtk_box_pack_start(GTK_BOX(vbox), image, FALSE, FALSE, 10);
@@ -111,4 +115,46 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
     
 
     return 0;
+}
+
+
+void graph_draw()
+{
+
+	double xs [] = {-10, -1, 0, 1, 10}; // Ici récup série de point des autres parties du programme
+	double ys [] = {28, -1, -2, -1, 2};
+
+	ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+    series->xs = xs;
+	series->xsLength = 5;
+	series->ys = ys;
+	series->ysLength = 5;
+	series->linearInterpolation = true;
+	series->lineType = L"dashed";
+	series->lineTypeLength = wcslen(series->lineType);
+	series->lineThickness = 2;
+	series->color = GetGray(0.3);
+
+	ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->width = 600;
+	settings->height = 400;
+	settings->autoBoundaries = true;
+	settings->autoPadding = true;
+  	settings->xLabel = L"X axis";
+  	settings->xLabelLength = wcslen(settings->xLabel);
+  	settings->yLabel = L"Y axis";
+  	settings->yLabelLength = wcslen(settings->yLabel);
+	ScatterPlotSeries *s [] = {series};
+	settings->scatterPlotSeries = s;
+	settings->scatterPlotSeriesLength = 1;
+
+	RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
+	DrawScatterPlot(canvasReference, 600, 400, xs, 5, ys, 5);
+
+	size_t length;
+	double *pngdata = ConvertToPNG(&length, canvasReference->image);
+	WriteToFile(pngdata, length, "src/graph.png");
+	DeleteImage(canvasReference->image);
+
+	return 0;
 }
