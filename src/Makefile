@@ -1,10 +1,12 @@
 include ../config
 
-all: hello
+all: test
 
-hello: main-hello.o
-	$(CC) -o ../efdf-$@ $^ $(LIBS)
+main: main-grapheur.o
+	$(CC) -o ../grapheur$@ $^ $(LIBS)
 
+test: main.o
+	$(CC) -o ../test$@ $^ $(LIBS)
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)
