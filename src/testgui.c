@@ -47,8 +47,13 @@ int main(int argc, char* argv[])
 	gtk_init(&argc, &argv); 
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	GdkColor color;
+    color.red = 0xffff;
+    color.green = 0xffff;
+    color.blue = 0xffff;
+	gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-    gtk_window_set_default_size(GTK_WINDOW(window), 300, 200);
+    gtk_window_set_default_size(GTK_WINDOW(window), 700, 500);
     gtk_container_set_border_width(GTK_CONTAINER(window), 20);
 
 	g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL); 
@@ -97,14 +102,14 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
     vbox = gtk_vbox_new(FALSE, 30);
     vbox1 = gtk_vbox_new(FALSE, 30);
 
-    gtk_box_pack_start(GTK_BOX(hbox3), fonction, TRUE, FALSE, 50);
+    gtk_box_pack_start(GTK_BOX(hbox3), fonction, TRUE, FALSE, 10);
 
-    wait(graph_draw());
+    graph_draw();
 
     image = gtk_image_new_from_file ("src/graph.png");
 
     gtk_box_pack_start(GTK_BOX(vbox), hbox3, FALSE, FALSE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), image, FALSE, FALSE, 10);
+    gtk_box_pack_start(GTK_BOX(vbox), image, TRUE, FALSE, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     gtk_widget_show_all(window);
@@ -122,7 +127,7 @@ void graph_draw()
 {
 
 	double xs [] = {-10, -1, 0, 1, 10}; // Ici récup série de point des autres parties du programme
-	double ys [] = {28, -1, -2, -1, 2};
+	double ys [] = {6, -2, -2, -1, 2};
 
 	ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
     series->xs = xs;
