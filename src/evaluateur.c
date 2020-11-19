@@ -12,8 +12,8 @@
 #define borne_min -10
 #define borne_sup 10
 
-int error = 0;
-char *cause [];
+int error = 0; // Si detection d'une erreur -> = 1
+char *cause []; // Si erreur = 1 -> indiquer la cause et stopper le traitement (sauf graphique)
 
 int main(void)
 {
@@ -40,8 +40,8 @@ int main(void)
     noeud_1.pjetonpreced=&noeud_2;
     noeud_1.pjetonsuiv=&jeton4;
 
-    cause[0] = 'lol';
-    error = 1;
+    // Pour modifier la cause : cause[0] = 'lol';
+    // Pour indiquer qu'il  y a une erreur error = 1;
 
     float couples[200][2];
     int tab_compteur = 0;
@@ -71,52 +71,6 @@ float fonc_eval(Noeud *A, float x)
 
     switch (A->jeton.lexem)
     {
-
-        // Détection d'une erreur
-    case ERREUR:
-        switch (A->jeton.valeur.erreur)
-        {
-        case DIV_ZERO: // Division par 0
-            return 100;
-            break;
-
-        case SQRT_NEG: // Racine nombre negatif
-            return 101;
-            break;
-
-        case PAR_NONFERM: // Parenthese non fermee
-            return 102;
-            break;
-
-        case PAR_NONOUVER: // Parenthese non ouverte
-            return 103;
-            break;
-
-        case DOUBLE_OPE: // Succession de 2 operateurs
-            return 104;
-            break;
-
-        case ORTO_FONC: // Mauvaise ecriture de fonction (ex : si au lieu de sin)
-            return 105;
-            break;
-
-        case MAJ_FONC: // defaut de majuscule ou minuscule (SIN et sin uniquement autor)
-            return 106;
-            break;
-
-        case BAR_NONFERME: // Bar d'absolu non ferme
-            return 107;
-            break;
-        
-        case VIRGULE: // Virgule au lieu du point
-            return 108;
-            break;
-
-        case OPE_PAR: // Oubli de l'operateur entre des parentheses
-            return 109;
-            break;
-        }
-
         // Détection d'une fonction        
     case FONCTION:
 
