@@ -81,7 +81,7 @@ int main() {
     expression[18].lexem = PAR_FERM;
 
     // 4
-
+    
 
     size_t length = sizeof(expression)/sizeof(expression[0]);
 
@@ -89,7 +89,8 @@ int main() {
 
     printf("\n\n");
     Node *arbre;
-    arbre  = create_tree(expression, length);
+    //arbre  = create_tree(expression, length);
+    arbre  = create_tree_recursive(expression, length);
     printf("\n\n");
 
 
