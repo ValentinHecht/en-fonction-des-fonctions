@@ -30,6 +30,32 @@ int main() {
     op_par[3].lexem = REEL;
     op_par[4].lexem = PAR_FERM;
 
+    // x*(x+3)+2
+    Jeton graph[9];
+    graph[0].lexem = VARIABLE;
+
+    graph[1].lexem = OPERATEUR;
+    graph[1].operateur = FOIS;
+
+    graph[2].lexem = PAR_OUV;
+
+    graph[3].lexem = VARIABLE;
+
+    graph[4].lexem = OPERATEUR;
+    graph[4].operateur = PLUS;
+
+    graph[5].lexem = REEL;
+    graph[5].reel = 3;
+
+    graph[6].lexem = PAR_FERM;
+
+    graph[7].lexem = OPERATEUR;
+    graph[7].operateur = PLUS;
+
+    graph[8].lexem = REEL;
+    graph[8].reel = 2;
+
+
     // sin(x*(x+3)+2)+tan(x+7)
     Jeton expression[19];
     expression[0].lexem = FONCTION;
@@ -82,17 +108,15 @@ int main() {
 
     // 4
     
-
-    size_t length = sizeof(expression)/sizeof(expression[0]);
+    size_t length = sizeof(graph)/sizeof(graph[0]);
 
     printf("%d", length);
 
     printf("\n\n");
     Node *arbre;
     //arbre  = create_tree(expression, length);
-    arbre  = create_tree_recursive(expression, length);
+    arbre  = create_tree_recursive(graph, length);
     printf("\n\n");
-
 
     printf("\nFin du programme...\n");
 

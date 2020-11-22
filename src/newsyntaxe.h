@@ -10,6 +10,6 @@ void afficher(Jeton *tab, int elem);
 
 Node *create_tree_recursive(Jeton *expression, int elem);
 
-Node *aller_a_gauche(Node *parent, Jeton *expression, int elem);
+Node *aller_a(Node *parent, Jeton *expression, int elem, int num);
 
-Node *aller_a_droite(Node *parent, Jeton *expression, int elem);
+int operande_in_parentesis(int debut[], int fin[], int length, int pos);
