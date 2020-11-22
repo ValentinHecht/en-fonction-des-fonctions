@@ -134,9 +134,10 @@ Node *create_node(Jeton *tabJeton, int elem, int *position) {
     init_tab(var, 20);
     int v = 0;
 
+
+    printf("\nelem: %d !", elem);
     // On récupère les positions de tout les jetons
-    for (int i = 0; i < elem; i++)
-    {
+    for (int i = 0; i < elem; i++) {
         if (tabJeton[i].lexem == FONCTION)
             debut_fonction[df] = i, df++, printf("\ndebut_fonction:  %d", i);
         if (tabJeton[i].lexem == PAR_OUV)
@@ -159,7 +160,7 @@ Node *create_node(Jeton *tabJeton, int elem, int *position) {
     
     // si l'expression ne contient qu'une fonction..
     if (debut_fonction[0] == 0 && fin_fonction[0] == elem - 1) {
-        printf("\nje suis dans le test d'une seule fonctions\n");
+        printf("\nje suis dans le test d'une seule fonction\n");
         node->jeton.lexem = tabJeton[debut_fonction[0]].lexem;
         node->jeton.valeur.fonction = tabJeton[debut_fonction[0]].fonction;
         printf("\nPOSITION DU JETON: 0\n"); //-> Fonction... On refait un tour");
@@ -259,7 +260,7 @@ Node *create_tree_recursive(Jeton *expression, int elem) {
 
     arbre = malloc(sizeof(*arbre));
 
-    arbre = aller_a(NULL, expression, elem, 0);
+    arbre = aller_a(NULL, expression, elem, -1);
 
     //printf("\ncouche : %d\ncolonne : %d\n", arbre->couche, arbre->colonne);
     //printf("\ncode lexem: %d\ncode valeur: %d\n", arbre->jeton.lexem, arbre->jeton.valeur.operateur);
@@ -272,7 +273,8 @@ Node *create_tree_recursive(Jeton *expression, int elem) {
 Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
 
     if (parent == NULL || (parent->jeton.lexem != REEL && parent->jeton.lexem != VARIABLE)) {
-        if (num == 0) printf("Je vais a GAUCHE\n");
+        if (num == -1) printf("INITIALISATION !\n\n");
+        else if (num == 0) printf("Je vais a GAUCHE\n");
         else printf("Je vais a DROITE\n");
         
         //if(parent != NULL)
@@ -296,27 +298,26 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
             
             // placer le jeton de la fonction et descendre d'un cran
             init_value(parent, node, num);
-
+            
             // je refais un creat node
             node->pjetonpreced = create_node(expression, elem, &position);
+            parent = node;
             node = node->pjetonpreced;
-
             ///// sin(cos(0)) = 1
-        } //else {
+        }
+        //elem+=3;
             
         for (int i = 0; i < position; i++) {
             gauche[i] = expression[i];
-            //printf("\nnum: %d\n", gauche[i]);
         }
         for (int j = position + 1, count = 0; j < elem; j++, count++) {
             droite[count] = expression[j];
         }
-        //}
 
         init_value(parent, node, num);
 
         node->pjetonpreced = aller_a(node, gauche, position, 0);
-        node->pjetonsuiv = aller_a(node, droite, elem - position, 1);
+        node->pjetonsuiv = aller_a(node, droite, elem - position - 1, 1);
 
         return node;
     } else {
@@ -333,7 +334,7 @@ void init_value(Node *parent, Node *node, int num) {
             node->couche = 0;
            
         } else {
-            if (num == 0) {
+            if (num == 0 || num == -1) {
                 node->colonne = parent->colonne * 2;
                 node->couche = parent->couche + 1;
             } else {

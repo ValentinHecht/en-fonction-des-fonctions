@@ -108,14 +108,14 @@ int main() {
 
     // 4
     
-    size_t length = sizeof(graph)/sizeof(graph[0]);
+    size_t length = sizeof(expression)/sizeof(expression[0]);
 
-    printf("%d", length);
+    //printf("%d", length);
 
     printf("\n\n");
     Node *arbre;
     //arbre  = create_tree(expression, length);
-    arbre  = create_tree_recursive(graph, length);
+    arbre  = create_tree_recursive(expression, length);
     printf("\n\n");
 
     printf("\nFin du programme...\n");
