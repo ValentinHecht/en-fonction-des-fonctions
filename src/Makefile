@@ -2,10 +2,10 @@ include ../config
 
 all: test
 
-main: main-grapheur.o
+main: main-grapheur.c
 	$(CC) -o ../grapheur$@ $^ $(LIBS)
 
-test: main.o
+test: main.c
 	$(CC) -o ../test$@ $^ $(LIBS)
 
 %.o: %.c

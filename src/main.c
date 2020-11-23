@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
     
     if (!error)
     {
-        for (float i = borne_min; i <=10; i++)
+        for (float i = borne_min; i <= borne_sup; i++)
         {
             couples[tab_compteur][0] = i;                       // Valeurs de x
             couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
