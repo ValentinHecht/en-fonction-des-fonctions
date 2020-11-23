@@ -15,72 +15,6 @@
 int error = 0; // Si detection d'une erreur -> = 1
 char *cause []; // Si erreur = 1 -> indiquer la cause et stopper le traitement (sauf graphique)
 
-int main(int argc, char const *argv[])
-{
-    float couples[200][2];
-    int tab_compteur = 0;
-    Noeud noeud_1;
-    
-    if (!error)
-    {
-        // tableau jeton = fonction lexical(foncton a faire)
-    }
-
-    if (!error)
-    {
-        typejeton jeton1;
-        jeton1.lexem = OPERATEUR;
-        jeton1.valeur.operateur=PLUS;
-        typejeton jeton2;
-        jeton2.lexem = FONCTION;
-        jeton2.valeur.operateur = SIN;
-        typejeton jeton3;
-        jeton3.lexem = VARIABLE;
-        typejeton jeton4;
-        jeton4.lexem=REEL;
-        jeton4.valeur.reel=12;
-
-        Noeud noeud_2;
-        noeud_2.jeton=jeton2;
-        noeud_2.pjetonpreced=&jeton3;
-
-
-        
-        noeud_1.jeton=jeton1;
-        noeud_1.pjetonpreced=&noeud_2;
-        noeud_1.pjetonsuiv=&jeton4;
-    }
-    
-    if (!error)
-    {
-        for (float i = borne_min; i <= borne_sup; i++)
-        {
-            couples[tab_compteur][0] = i;                       // Valeurs de x
-            couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
-            tab_compteur++;
-        }
-        for (int y = 0; y < tab_compteur; y++)
-        {
-            printf("Valeur de x    : %f\n", couples[y][0]);
-            printf("Valeur de f(x) : %f\n", couples[y][1]);
-            printf("\n");
-        }
-    }
-    // Dans partie graphique
-    if (error)
-    {
-        // print de la cause
-    }
-    else
-    {
-        // print graph et UX
-    }
-    
-    return 0;
-}
-
-
-
 float fonc_eval(Noeud *A, float x)
 {
     float y, fils_gauche, fils_droit;
@@ -169,4 +103,69 @@ float fonc_eval(Noeud *A, float x)
         return x;
         break;
     }
+}
+
+int main(int argc, char const *argv[])
+{
+    float couples[200][2];
+    int tab_compteur = 0;
+    Noeud noeud_1;
+    
+    if (!error)
+    {
+        // tableau jeton = fonction lexical(foncton a faire)
+    }
+
+    if (!error)
+    {
+        typejeton jeton1;
+        jeton1.lexem = OPERATEUR;
+        jeton1.valeur.operateur=PLUS;
+        typejeton jeton2;
+        jeton2.lexem = FONCTION;
+        jeton2.valeur.operateur = SIN;
+        typejeton jeton3;
+        jeton3.lexem = VARIABLE;
+        typejeton jeton4;
+        jeton4.lexem=REEL;
+        jeton4.valeur.reel=12;
+
+        Noeud noeud_2;
+        noeud_2.jeton=jeton2;
+        noeud_2.pjetonpreced=&jeton3;
+
+
+        
+        noeud_1.jeton=jeton1;
+        noeud_1.pjetonpreced=&noeud_2;
+        noeud_1.pjetonsuiv=&jeton4;
+    }
+    int i = borne_min;
+    int max = borne_sup;
+    if (!error)
+    {
+        for (i; i <= max; i++)
+        {
+            couples[tab_compteur][0] = i;                       // Valeurs de x
+            couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
+            tab_compteur++;
+        }
+        for (int y = 0; y < tab_compteur; y++)
+        {
+            printf("Valeur de x    : %f\n", couples[y][0]);
+            printf("Valeur de f(x) : %f\n", couples[y][1]);
+            printf("\n");
+        }
+    }
+    // Dans partie graphique
+    if (error)
+    {
+        // print de la cause
+    }
+    else
+    {
+        // print graph et UX
+    }
+    
+    return 0;
 }
