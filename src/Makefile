@@ -2,7 +2,7 @@ include ../config
 
 all: syntaxe
 
-syntaxe: newsyntaxe.o main.o
+syntaxe: newsyntaxe.c main.c
 	$(CC) -o ../efdf-$@ $^ $(LIBS)
 	../efdf-$@
 

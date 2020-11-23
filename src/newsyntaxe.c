@@ -19,6 +19,25 @@ int longueur(int tab[]) {
     return i;
 }
 
+void init_value(Node* parent, Node* node, int num) {
+    node->pjetonparent = parent;
+        if (parent == NULL) {
+            node->colonne = 0;
+            node->couche = 0;
+           
+        } else {
+            if (num == 0 || num == -1) {
+                node->colonne = parent->colonne * 2;
+                node->couche = parent->couche + 1;
+            } else {
+                node->colonne = parent->colonne * 2 + 1;
+                node->couche = parent->couche + 1;
+            }
+        }
+    printf("\nJe suis dans la couche: %d\nJe suis dans la colonne: %d\n", node->couche, node->colonne);
+    printf("J'ai la valeur: %d\n\n", node->jeton.lexem);   
+}
+
 int *fourchette_operateur(int debut[], int fin[], int length, int pos) {
     // "ok" stock la position de la parenthèse ouvrante en fonction de celui qui la ferme
     // les positions de "ok" sont donc définie en fonction de "fin"
@@ -327,24 +346,7 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
     }
 }
 
-void init_value(Node *parent, Node *node, int num) {
-    node->pjetonparent = parent;
-        if (parent == NULL) {
-            node->colonne = 0;
-            node->couche = 0;
-           
-        } else {
-            if (num == 0 || num == -1) {
-                node->colonne = parent->colonne * 2;
-                node->couche = parent->couche + 1;
-            } else {
-                node->colonne = parent->colonne * 2 + 1;
-                node->couche = parent->couche + 1;
-            }
-        }
-    printf("\nJe suis dans la couche: %d\nJe suis dans la colonne: %d\n", node->couche, node->colonne);
-    printf("J'ai la valeur: %d\n\n", node->jeton.lexem);   
-}
+
 
 /*
 Node *aller_a_droite(Node *parent, Jeton *expression, int elem) {
