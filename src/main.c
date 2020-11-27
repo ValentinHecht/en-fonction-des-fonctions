@@ -1,171 +1,124 @@
-/*******************************************************************************************
-* En fonction des fonctions
+#include <stdio.h>
+#include "newsyntaxe.h"
 
-* Romain Larramendy, Lucas Bremard, Killian Baert, Valentin Hecht, Thomas Tissier, Maxence Dhaynaut, Benjamin Chane, Louis-Marie Bossard 
+int main() {
+    // sin(x)
+    Jeton fonction[4];
+    fonction[0].fonction = COS;
+    fonction[0].lexem = FONCTION;
+    fonction[1].lexem = PAR_OUV;
+    fonction[2].lexem = VARIABLE;
+    fonction[3].lexem = PAR_FERM;
 
-* FISA-TI23 Copyright 2020-2020
-********************************************************************************************/
-//#include "evaluateur.h"
-#include "jeton.h"
-#include <math.h>
+    // 4+4
+    Jeton operande[3];
+    operande[0].reel = 4;
+    operande[0].lexem = REEL;
+    operande[1].operateur = PLUS;
+    operande[1].lexem = OPERATEUR;
+    operande[2].reel = 4;
+    operande[2].lexem = REEL;
 
-#define borne_min -10;
-#define borne_sup 10;
+    // (4+4)
+    Jeton op_par[5];
+    op_par[0].lexem = PAR_OUV;
+    op_par[1].reel = 4;
+    op_par[1].lexem = REEL;
+    op_par[2].operateur = PLUS;
+    op_par[2].lexem = OPERATEUR;
+    op_par[3].reel = 4;
+    op_par[3].lexem = REEL;
+    op_par[4].lexem = PAR_FERM;
 
-int error = 0; // Si detection d'une erreur -> = 1
-char *cause []; // Si erreur = 1 -> indiquer la cause et stopper le traitement (sauf graphique)
+    // x*(x+3)+2
+    Jeton graph[9];
+    graph[0].lexem = VARIABLE;
 
-float fonc_eval(Noeud *A, float x)
-{
-    float y, fils_gauche, fils_droit;
+    graph[1].lexem = OPERATEUR;
+    graph[1].operateur = FOIS;
 
-    switch (A->jeton.lexem)
-    {
-        // Détection d'une fonction        
-    case FONCTION:
+    graph[2].lexem = PAR_OUV;
 
-        y = fonc_eval(A->pjetonpreced, x);
+    graph[3].lexem = VARIABLE;
 
-        switch (A->jeton.valeur.fonction)
-        {
-        case ABS: // Valeur absolue
-            return abs(y);
-            break;
+    graph[4].lexem = OPERATEUR;
+    graph[4].operateur = PLUS;
 
-        case SIN: // Sinus
-            return sin(y);
-            break;
+    graph[5].lexem = REEL;
+    graph[5].reel = 3;
 
-        case SQRT: //Racine carre
-            return sqrt(y);
-            break;
+    graph[6].lexem = PAR_FERM;
 
-        case LOG: // Logarithme
-            return log(y);
-            break;
+    graph[7].lexem = OPERATEUR;
+    graph[7].operateur = PLUS;
 
-        case COS: // Cosinus 
-            return cos(y);
-            break;
+    graph[8].lexem = REEL;
+    graph[8].reel = 2;
 
-        case TAN: // Tangente
-            return tan(y);
-            break;
 
-        case EXP: // Exponentielle
-            return expf(y);
-            break;
+    // sin(x*(x+3)+2)+tan(x+7)
+    Jeton expression[19];
+    expression[0].lexem = FONCTION;
+    expression[0].fonction = SIN;
 
-        case ENTIER: // Decimal -> Entier
-            return round(y);
-            break;
+    expression[1].lexem = PAR_OUV;
 
-        case VAL_NEG: // Opposé du nombre saisi
-            return y * (-1);
-            break;
-        }
+    expression[2].lexem = VARIABLE;
 
-        // Détection d'un opérateur
-    case OPERATEUR:
-        fils_gauche = fonc_eval(A->pjetonpreced, x);
-        fils_droit = fonc_eval(A->pjetonsuiv, x);
+    expression[3].lexem = OPERATEUR;
+    expression[3].operateur = FOIS;
 
-        switch (A->jeton.valeur.operateur)
-        {
-        case PLUS: // Addition
-            return fils_gauche + fils_droit;
-            break;
+    expression[4].lexem = PAR_OUV;
 
-        case MOINS: // Soustraction
-            return fils_gauche - fils_droit;
-            break;
+    expression[5].lexem = VARIABLE;
 
-        case FOIS: // Multiplication
-            return fils_gauche * fils_droit;
-            break;
+    expression[6].lexem = OPERATEUR;
+    expression[6].operateur = PLUS;
 
-        case DIV: // Division
-            return fils_gauche / fils_droit;
-            break;
+    expression[7].lexem = REEL;
+    expression[7].reel = 3;
 
-        case PUIS: // Puissance
-            return pow(fils_gauche, fils_droit);
-            break;
-        }
+    expression[8].lexem = PAR_FERM;
 
-        // Détection d'un réel
-    case REEL:
-        return A->jeton.valeur.reel;
-        break;
+    expression[9].lexem = OPERATEUR;
+    expression[9].operateur = PLUS;
 
-        // Détection d'une variable
-    case VARIABLE:
-        return x;
-        break;
-    }
-}
+    expression[10].lexem = REEL;
+    expression[10].reel = 2;
 
-int main(int argc, char const *argv[])
-{
-    float couples[200][2];
-    int tab_compteur = 0;
-    Noeud noeud_1;
+    expression[11].lexem = PAR_FERM;
+
+    expression[12].lexem = OPERATEUR;
+    expression[12].operateur = PLUS;
+
+    expression[13].lexem = FONCTION;
+    expression[13].fonction = TAN;
+
+    expression[14].lexem = PAR_OUV;
+
+    expression[15].lexem = VARIABLE;
+
+    expression[16].lexem = OPERATEUR;
+    expression[16].operateur = PLUS;
+
+    expression[17].lexem = REEL;
+    expression[17].reel = 7;
+
+    expression[18].lexem = PAR_FERM;
+
+    // 4
     
-    if (!error)
-    {
-        // tableau jeton = fonction lexical(foncton a faire)
-    }
+    size_t length = sizeof(graph)/sizeof(graph[0]);
 
-    if (!error)
-    {
-        typejeton jeton1;
-        jeton1.lexem = OPERATEUR;
-        jeton1.valeur.operateur=PLUS;
-        typejeton jeton2;
-        jeton2.lexem = FONCTION;
-        jeton2.valeur.operateur = SIN;
-        typejeton jeton3;
-        jeton3.lexem = VARIABLE;
-        typejeton jeton4;
-        jeton4.lexem=REEL;
-        jeton4.valeur.reel=12;
+    //printf("%d", length);
 
-        Noeud noeud_2;
-        noeud_2.jeton=jeton2;
-        noeud_2.pjetonpreced=&jeton3;
+    printf("\n\n");
+    Node *arbre;
+    //arbre  = create_tree(expression, length);
+    arbre  = create_tree_recursive(graph, length);
+    printf("\n\n");
 
+    printf("\nFin du programme...\n");
 
-        
-        noeud_1.jeton=jeton1;
-        noeud_1.pjetonpreced=&noeud_2;
-        noeud_1.pjetonsuiv=&jeton4;
-    }
-    int i = borne_min;
-    int max = borne_sup;
-    if (!error)
-    {
-        for (i; i <= max; i++)
-        {
-            couples[tab_compteur][0] = i;                       // Valeurs de x
-            couples[tab_compteur][1] = fonc_eval(&noeud_1, i);  // Valeurs de f(x)
-            tab_compteur++;
-        }
-        for (int y = 0; y < tab_compteur; y++)
-        {
-            printf("Valeur de x    : %f\n", couples[y][0]);
-            printf("Valeur de f(x) : %f\n", couples[y][1]);
-            printf("\n");
-        }
-    }
-    // Dans partie graphique
-    if (error)
-    {
-        // print de la cause
-    }
-    else
-    {
-        // print graph et UX
-    }
-    
     return 0;
 }
