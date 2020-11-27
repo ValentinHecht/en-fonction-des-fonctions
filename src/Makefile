@@ -1,12 +1,9 @@
 include ../config
 
-all: test
+all: main
 
-main: main-grapheur.c
-	$(CC) -o ../grapheur$@ $^ $(LIBS)
-
-test: main.c
-	$(CC) -o ../test$@ $^ $(LIBS)
+main: main.c
+	$(CC) -o ../grapheur $^ $(LIBS)
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)
