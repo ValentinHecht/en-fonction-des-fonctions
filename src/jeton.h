@@ -5,6 +5,8 @@
 
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
+
+
 // Énumération des différents types de lexems existants
 
 typedef enum{
@@ -29,6 +31,7 @@ typedef enum{
     DIV_ZERO, DOUBLE_OPE, SQRT_NEG, PAR_NONFERM, PAR_NONOUVER, ORTO_FONC, MAJ_FONC, BAR_NONFERME, OPE_PAR, BAR_ABS
 }typeerreur;
 
+
 // Énumération des différents types de valeurs existantes
 typedef union{
     float reel;
@@ -36,6 +39,7 @@ typedef union{
     typeoperateur operateur;
     typeerreur erreur;
 }typevaleur;
+
 
 // Énumération des différents types de jetons existants
 typedef struct{
