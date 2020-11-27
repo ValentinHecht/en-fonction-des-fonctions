@@ -1,10 +1,9 @@
 include ../config
 
-all: syntaxe
+all: main
 
-syntaxe: newsyntaxe.c main.c
-	$(CC) -o ../efdf-$@ $^ $(LIBS)
-	../efdf-$@
+main: main.c
+	$(CC) -o ../grapheur $^ $(LIBS)
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)
@@ -15,3 +14,5 @@ config:
 
 clean:
 	rm -rf *.o
+
+
