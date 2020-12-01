@@ -108,6 +108,7 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
 
     graph_draw();
 
+	//création d'une variable contenant le .PNG
     image = gtk_image_new_from_file ("src/graph.png");
 
     gtk_box_pack_start(GTK_BOX(vbox), hbox3, FALSE, FALSE, 5);
@@ -118,6 +119,7 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
 
 	gtk_main();
 
+	//Fermeture de la fenêtre
     g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL); 
     
 
