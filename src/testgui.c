@@ -45,19 +45,22 @@ void destroy()
 int main(int argc, char* argv[]) 
 { 
 	gtk_init(&argc, &argv); 
-
+    
+    //Initiation de la fenêtre
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	GdkColor color;
     color.red = 0xffff;
     color.green = 0xffff;
     color.blue = 0xffff;
-	gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
+    gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 500);
     gtk_container_set_border_width(GTK_CONTAINER(window), 20);
 
 	g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL); 
 
+	
+    //Contenu du menu
     function_label = gtk_label_new("FONCTION : ");
     function_entry = gtk_entry_new();
 
@@ -77,7 +80,6 @@ int main(int argc, char* argv[])
     gtk_box_pack_start(GTK_BOX(hbox2), button, FALSE, FALSE, 5);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox2, FALSE, FALSE, 5);
 
-	//gtk_container_add(GTK_CONTAINER(window), hbox);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	gtk_widget_show_all(window); 
