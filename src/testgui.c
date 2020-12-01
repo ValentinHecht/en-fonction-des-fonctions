@@ -134,7 +134,7 @@ void graph_draw()
 
 	//génération des axes 
 	ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
-    series->xs = xs;
+	series->xs = xs;
 	series->xsLength = 5;
 	series->ys = ys;
 	series->ysLength = 5;
@@ -145,7 +145,7 @@ void graph_draw()
 	series->color = GetGray(0.3);
 
 	ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
-    settings->width = 600;
+	settings->width = 600;
 	settings->height = 400;
 	settings->autoBoundaries = true;
 	settings->autoPadding = true;
