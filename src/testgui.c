@@ -128,9 +128,11 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
 void graph_draw()
 {
 
-	double xs [] = {-10, -1, 0, 1, 10}; // Ici récup série de point des autres parties du programme
+	//récupération des points de la fonction pour les placer sur le graph
+	double xs [] = {-10, -1, 0, 1, 10};
 	double ys [] = {6, -2, -2, -1, 2};
 
+	//génération des axes 
 	ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
     series->xs = xs;
 	series->xsLength = 5;
@@ -155,6 +157,7 @@ void graph_draw()
 	settings->scatterPlotSeries = s;
 	settings->scatterPlotSeriesLength = 1;
 
+	//Génération d'un .PNG qui contient la représentation graphique de la fonction
 	RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
 	DrawScatterPlot(canvasReference, 600, 400, xs, 5, ys, 5);
 
