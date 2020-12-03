@@ -4,5 +4,9 @@ build
 
 # Generated files:
 
+<<<<<<< HEAD
 Efdf-*
+=======
+efdf-*
+>>>>>>> analyse_syntaxique
 *.o
