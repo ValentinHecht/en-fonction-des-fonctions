@@ -15,11 +15,8 @@ int main(void)
 {
     printf("Entrez votre fonction : ");
     scanf("%s", operation);
-    //printf("Vous avez ecrit : %s", operation);
 
     analyse_lexical(operation);
-
-
 
     return 0;
 }

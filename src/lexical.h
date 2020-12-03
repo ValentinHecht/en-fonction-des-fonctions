@@ -6,4 +6,7 @@
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
 
+#include "jeton.h"
+
 Jeton* analyse_lexical(char*);
+Jeton jetons[25];

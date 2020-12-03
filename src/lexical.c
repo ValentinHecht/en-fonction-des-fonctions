@@ -9,20 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "jeton.h"
 #include "lexical.h"
 
 int i = 0;
 int jeton = 0;
 
-Jeton jetons[25];
-
 Jeton* analyse_lexical(char* op)  {
-    //printf("Vous avez ecrit : ");
 
     while(op[i] != '\0') {
-        //printf("%c", op[i]);
-
 
         //////////////////////// RECHERCHE D'UNE VARIABLE ////////////////////////
 
@@ -137,14 +131,14 @@ Jeton* analyse_lexical(char* op)  {
             int indice = 0;
             char tabreel[10];
             while(isdigit(op[y]) || op[y] == '.') {
-                printf("Variable detecte (ou virgule) ! : %c \n", op[y]);
+                printf("Reel detecte (ou virgule) ! : %c \n", op[y]);
                 tabreel[indice] = op[y];
                 y++;
                 indice++;
             }
 
             Jeton jetonvar;
-            jetonvar.lexem = VARIABLE;
+            jetonvar.lexem = REEL;
             jetonvar.reel = atof(tabreel);
             jetons[jeton] = jetonvar;
             i+= indice;
@@ -199,16 +193,17 @@ Jeton* analyse_lexical(char* op)  {
     puts("FIN detecte !");
     Jeton jetonfin;
     jetonfin.lexem = FIN;
+    jetonfin.reel = jeton;
     jetons[jeton] = jetonfin;
+    jeton++;
 
+    printf("\nNombre de jetons : %f", jetonfin.reel);
 
     int test = 0;
     while(test != sizeof(jetons)/sizeof(jetons[0])){
         printf("\nTest du tableau | Lexem : %i", jetons[test].lexem);
         test++;
     }
-
-
 
     return jetons;
 };

@@ -34,7 +34,7 @@ typedef union{
     typeerreur erreur;
 } typejeton;
 
-//Structure lexem
+//Structure jeton
 typedef struct Jeton {
     typelexem lexem;
     float reel;
