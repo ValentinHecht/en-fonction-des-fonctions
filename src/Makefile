@@ -2,9 +2,9 @@ include ../config
 
 all: main
 
-main: main.c newsyntaxe.c
-	$(CC) -o ../efdf-$@ $^ $(LIBS)
-	../efdf-$@
+main: main.o newsyntaxe.o
+	$(CC) -o ../grapheur $^ $(LIBS)
+	../grapheur
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)

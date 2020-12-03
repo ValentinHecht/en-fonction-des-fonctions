@@ -1,29 +1,111 @@
 #include <stdio.h>
 #include "newsyntaxe.h"
 
-/**
- * Initialise les valeurs d'un tableau à -1
- * 
- * tab: le tableau
- * elem: le nombre d'element du tableau
- **/
+
 int erreur = 0;
 char *cause[];
 
-int contains(Jeton tab[], typejeton jeton)
+void init_value(Node *parent, Node *node, int num) {
+    node->pjetonparent = parent;
+        if (parent == NULL) {
+            node->colonne = 0;
+            node->couche = 0;
+        } 
+        else {
+            if (num == 0 || num == -1) {
+                node->colonne = parent->colonne * 2;
+                node->couche = parent->couche + 1;
+            } else {
+                node->colonne = parent->colonne * 2 + 1;
+                node->couche = parent->couche + 1;
+            }
+        }
+
+    printf("\nJe suis dans la couche: %d\nJe suis dans la colonne: %d\n", node->couche, node->colonne);
+    printf("J'ai la valeur: %d\n\n", node->jeton.lexem);   
+}
+
+Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
+
+    if (parent == NULL || (parent->jeton.lexem != REEL && parent->jeton.lexem != VARIABLE)) {
+        if (num == -1) printf("INITIALISATION !\n\n");
+        else if (num == 0) printf("Je vais a GAUCHE\n");
+        else printf("Je vais a DROITE\n");
+        
+        
+        Node *node;
+        int position = -1;
+
+        Jeton gauche[elem - 1];
+        Jeton droite[elem - 1];
+
+        node = create_node(expression, elem, &position);  
+
+        // ou faire un while
+        while (position == -2) {
+            // enlever 3 termes dans expressions
+            for(int i = 0; i < elem-3; i++) {
+                expression[i] = expression[i+2];
+            }
+            elem -= 3;
+            
+            // placer le jeton de la fonction et descendre d'un cran
+            init_value(parent, node, num);
+            
+            // je refais un creat node
+            node->pjetonpreced = create_node(expression, elem, &position);
+            parent = node;
+            node = node->pjetonpreced;
+            ///// sin(cos(0)) = 1
+        }
+            
+        for (int i = 0; i < position; i++) {
+            gauche[i] = expression[i];
+        }
+        for (int j = position + 1, count = 0; j < elem; j++, count++) {
+            droite[count] = expression[j];
+        }
+
+        init_value(parent, node, num);
+
+        node->pjetonpreced = aller_a(node, gauche, position, 0);
+        node->pjetonsuiv = aller_a(node, droite, elem - position - 1, 1);
+
+        return node;
+    } 
+    else {
+        if (num == 0) printf("Fin gauche\n");
+        else printf("Fin droite\n");
+        return NULL;
+    }
+}
+
+Node *create_tree_recursive(Jeton *expression, int elem) {
+    Node *arbre;
+
+    arbre = malloc(sizeof(*arbre));
+
+    arbre = aller_a(NULL, expression, elem, -1);
+
+    return arbre;
+}
+
+int contains(Jeton tab[], typejeton jeton, int elem)
 {
     int occ = 0;
 
-    for (int i = 0; i < sizeof(tab); i++)
+    for (int i = 0; i < elem; i++)
     {
         if (tab[i].lexem == jeton.lexem)
         {
             occ++;
         }
+        /*
         else if (tab[i].operateur == jeton.valeur.operateur)
         {
             occ++;
         }
+        */
     }
 
     return occ;
@@ -94,8 +176,8 @@ void create_tree(Jeton tabJeton[]) {
     arbre->pjetonparent = -1;
     // si l'expression ne contient qu'une fonction..
     if (fin_fonction[0] == length) {
-        arbre->jeton.lexem == tabJeton[debut_fonction[0]].lexem;
-        arbre->jeton.valeur.fonction == tabJeton[debut_fonction[0]].fonction;
+        arbre->jeton.lexem = tabJeton[debut_fonction[0]].lexem;
+        arbre->jeton.valeur.fonction = tabJeton[debut_fonction[0]].fonction;
         debut_fonction[0] = -1;
     }
     // sinon on prend le premier opérateur
@@ -104,8 +186,8 @@ void create_tree(Jeton tabJeton[]) {
         while (is_inPar(debut_parenthese, fin_parenthese, operande[i]) == 0) {
             i++;
         }
-        arbre->jeton.lexem == tabJeton[operande[i]].lexem;
-        arbre->jeton.valeur.operateur == tabJeton[operande[i]].operateur;
+        arbre->jeton.lexem = tabJeton[operande[i]].lexem;
+        arbre->jeton.valeur.operateur = tabJeton[operande[i]].operateur;
         operande[i] = -1;
     }
 
@@ -130,12 +212,12 @@ Node *syntaxe(Jeton tabJeton[], int elem)
     // erreur 102-103
     typejeton ouverte;
     ouverte.lexem = PAR_OUV;
-    int ouvrir = contains(tabJeton, ouverte);
+    int ouvrir = contains(tabJeton, ouverte, elem);
     typejeton ferme;
     ferme.lexem = PAR_FERM;
-    int fermer = contains(tabJeton, ferme);
-    printf("test 1 : %d\n", fermer);
-    printf("test 2 : %d\n", ouvrir);
+    int fermer = contains(tabJeton, ferme, elem);
+    printf("test 1 : %d\n", ouvrir);
+    printf("test 2 : %d\n", fermer); 
 
     // erreur 104
     typejeton double_ope;
@@ -145,7 +227,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
     // erreur 107
     typejeton barre;
     barre.lexem = BARRE;
-    int doublon_absolu = contains(tabJeton, ouverte);
+    int doublon_absolu = contains(tabJeton, barre, elem);
 
     // erreur 109
     typejeton ope_manquant;
@@ -166,6 +248,8 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         if (ouvrir > fermer){
             arbre->jeton.valeur.erreur = PAR_NONFERM;
             erreur = 1;
+            printf("test 3 : %d\n", fermer);
+            printf("test 4 : %d\n", ouvrir);
             cause[0]="Une parenthèse ')' est manquante.";
             break;
         }            
@@ -179,7 +263,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         }
 
         // test erreur 104 (double opérande)
-        if (tabJeton[i].operateur == tabJeton[i + 1].operateur)
+        if ((tabJeton[i].lexem == OPERATEUR) && (tabJeton[i + 1].lexem == OPERATEUR))
         {
             arbre->jeton.lexem = ERREUR;
             arbre->jeton.valeur.erreur = DOUBLE_OPE;
@@ -190,7 +274,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         }
 
         // test erreur 107 (Barre non fermée pour val abs)
-        if (doublon_absolu % 2 != 0) {
+        if (doublon_absolu% 2 != 0) {
 
             arbre[i].jeton.valeur.erreur = BAR_ABS;
             erreur = 1;
@@ -199,7 +283,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         }            
 
         // test erreur 109 parenthèse fermée à côté d'une parenthèse ouverte
-        if (tabJeton[i].lexem == tabJeton[i + 1].lexem)
+        if ((tabJeton[i].lexem == PAR_FERM) && (tabJeton[i + 1].lexem == PAR_OUV))
         {
 
             arbre->jeton.valeur.erreur = OPE_PAR;
@@ -222,6 +306,8 @@ Node *syntaxe(Jeton tabJeton[], int elem)
     }
     else{
         printf("%s",cause[0]);
+        erreur = 0;
+        cause[0] = "";
     }
 
     return arbre;
@@ -388,70 +474,8 @@ Node *create_node(Jeton *tabJeton, int elem, int *position) {
     return node;
 }
 
-Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
 
-    if (parent == NULL || (parent->jeton.lexem != REEL && parent->jeton.lexem != VARIABLE)) {
-        if (num == -1) printf("INITIALISATION !\n\n");
-        else if (num == 0) printf("Je vais a GAUCHE\n");
-        else printf("Je vais a DROITE\n");
-        
-        
-        Node *node;
-        int position = -1;
 
-        Jeton gauche[elem - 1];
-        Jeton droite[elem - 1];
-
-        node = create_node(expression, elem, &position);  
-
-        // ou faire un while
-        while (position == -2) {
-            // enlever 3 termes dans expressions
-            for(int i = 0; i < elem-3; i++) {
-                expression[i] = expression[i+2];
-            }
-            elem -= 3;
-            
-            // placer le jeton de la fonction et descendre d'un cran
-            init_value(parent, node, num);
-            
-            // je refais un creat node
-            node->pjetonpreced = create_node(expression, elem, &position);
-            parent = node;
-            node = node->pjetonpreced;
-            ///// sin(cos(0)) = 1
-        }
-            
-        for (int i = 0; i < position; i++) {
-            gauche[i] = expression[i];
-        }
-        for (int j = position + 1, count = 0; j < elem; j++, count++) {
-            droite[count] = expression[j];
-        }
-
-        init_value(parent, node, num);
-
-        node->pjetonpreced = aller_a(node, gauche, position, 0);
-        node->pjetonsuiv = aller_a(node, droite, elem - position - 1, 1);
-
-        return node;
-    } 
-    else {
-        if (num == 0) printf("Fin gauche\n");
-        else printf("Fin droite\n");
-        return NULL;
-    }
-}
-/**
- * Cherche l'operande le moins prioritaire avec une expression comportant des parentheses
- * 
- * debut: tableau comprenant les positions des parentheses ouvrantes dans la fonctions
- * fin: tableau comprenant les positions des parentheses fermantes dans la fonctions
- * length: longueurs des tableaux (on suppose pas qu'il n'y a pas d'erreurs et que les tableaux ont la meme longueurs)
- * pos: position du jeton a tester
- * 
- * return: 0 si l'operande est dans une parenhese, 1 sinon
- **/
 int operande_in_parentesis(int debut[], int fin[], int length, int pos) {
     if (length == 0) return 1;
 
@@ -487,72 +511,21 @@ int operande_in_parentesis(int debut[], int fin[], int length, int pos) {
     return res;
 }
 
-/**
- * Creation d'un noeud
- * 
- * tabJeton: tableau de jeton
- * elem: nombre d'elements dans tabJeton
- * out position: prend la position du jeton correspondant au noeud actuel
- * 
- * return: Noeud actuel
- **/
 
 
-/**
- * Fonction principale de la création de l'arbre
- * 
- * expression: tableau de jeton que LEXICAL NOUS DONNE
- * elem: nombre d'elements du tebleau de jeton que LEXICAL NOUS DONNE
- * 
- * return: L'arbre
- **/
-Node *create_tree_recursive(Jeton *expression, int elem) {
-    Node *arbre;
-
-    arbre = malloc(sizeof(*arbre));
-
-    arbre = aller_a(NULL, expression, elem, -1);
-
-    return arbre;
-}
 
 
-/**
- * Traitements des jetons
- * 
- * parent: c'est le parent
- * expression: tableau de jeton a traiter
- * elem: nombre d'element de "expression"
- * num: bifurcation => 0 -> gauche | 1 -> droite
- * 
- * return le noeud actuel avec plus de detail (colonne, couche, etc..)
- **/
+
+
+
+
 
 
 /**
  * Initialise les valeurs "colonne" et "couche" dans le node et le lie au parent
  * 
- * parent: c'est le parent du neoud
- * node: noeud a traiter
- * num: bifurcation => 0 -> gauche | 1 -> droite 
+ * @param parent : c'est le parent du noeud
+ * @param node : noeud à traiter
+ * @param num : bifurcation. si 0, on descend vers la gauche sinon vers la droite
  **/
 
-void init_value(Node *parent, Node *node, int num) {
-    node->pjetonparent = parent;
-        if (parent == NULL) {
-            node->colonne = 0;
-            node->couche = 0;
-        } 
-        else {
-            if (num == 0 || num == -1) {
-                node->colonne = parent->colonne * 2;
-                node->couche = parent->couche + 1;
-            } else {
-                node->colonne = parent->colonne * 2 + 1;
-                node->couche = parent->couche + 1;
-            }
-        }
-
-    printf("\nJe suis dans la couche: %d\nJe suis dans la colonne: %d\n", node->couche, node->colonne);
-    printf("J'ai la valeur: %d\n\n", node->jeton.lexem);   
-}
