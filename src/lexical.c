@@ -12,7 +12,7 @@
 #include "lexical.h"
 
 int i = 0;
-int jeton = 0;
+int nbJeton = 0;
 
 Jeton* analyse_lexical(char* op)  {
 
@@ -25,8 +25,8 @@ Jeton* analyse_lexical(char* op)  {
             Jeton jetonvar;
             jetonvar.var = op[i];
             jetonvar.lexem = VARIABLE;
-            jetons[jeton] = jetonvar;
-            jeton++;
+            jetons[nbJeton] = jetonvar;
+            nbJeton++;
             i++;            
         }
         
@@ -37,72 +37,72 @@ Jeton* analyse_lexical(char* op)  {
             Jeton jetonabs;
             jetonabs.lexem = FONCTION;
             jetonabs.fonction = ABS;
-            jetons[jeton] = jetonabs;
-            jeton++;
+            jetons[nbJeton] = jetonabs;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 's' && op[i+1] == 'i' && op[i+2] == 'n') || (op[i] == 'S' && op[i+1] == 'I' && op[i+2] == 'N')) {
             puts("Fonction SIN detecte !");
             Jeton jetonsin;
             jetonsin.lexem = FONCTION;
             jetonsin.fonction = SIN;
-            jetons[jeton] = jetonsin;
-            jeton++;
+            jetons[nbJeton] = jetonsin;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 'c' && op[i+1] == 'o' && op[i+2] == 's') || (op[i] == 'C' && op[i+1] == 'O' && op[i+2] == 'S')) {
             puts("Fonction COS detecte !");
             Jeton jetonsicos;
             jetonsicos.lexem = FONCTION;
             jetonsicos.fonction = COS;
-            jetons[jeton] = jetonsicos;
-            jeton++;
+            jetons[nbJeton] = jetonsicos;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 's' && op[i+1] == 'q' && op[i+2] == 'r' && op[i+3] == 't') || (op[i] == 'S' && op[i+1] == 'Q' && op[i+2] == 'R' && op[i+3] == 'T')) {
             puts("Fonction SQRT detecte !");
             Jeton jetonsqrt;
             jetonsqrt.lexem = FONCTION;
             jetonsqrt.fonction = SQRT;
-            jetons[jeton] = jetonsqrt;
-            jeton++;
+            jetons[nbJeton] = jetonsqrt;
+            nbJeton++;
             i = i+4;
         } else if ((op[i] == 'l' && op[i+1] == 'o' && op[i+2] == 'g') || (op[i] == 'L' && op[i+1] == 'O' && op[i+2] == 'G')) {
             puts("Fonction LOG detecte !");
             Jeton jetonlog;
             jetonlog.lexem = FONCTION;
             jetonlog.fonction = LOG;
-            jetons[jeton] = jetonlog;
-            jeton++;
+            jetons[nbJeton] = jetonlog;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 't' && op[i+1] == 'a' && op[i+2] == 'n') || (op[i] == 'T' && op[i+1] == 'A' && op[i+2] == 'N')) {
             puts("Fonction TAN detecte !");
             Jeton jetontan;
             jetontan.lexem = FONCTION;
             jetontan.fonction = TAN;
-            jetons[jeton] = jetontan;
-            jeton++;
+            jetons[nbJeton] = jetontan;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 'e' && op[i+1] == 'x' && op[i+2] == 'p') || (op[i] == 'E' && op[i+1] == 'X' && op[i+2] == 'P')) {
             puts("Fonction EXP detecte !");
             Jeton jetonexp;
             jetonexp.lexem = FONCTION;
             jetonexp.fonction = EXP;
-            jetons[jeton] = jetonexp;
-            jeton++;
+            jetons[nbJeton] = jetonexp;
+            nbJeton++;
             i = i+3;
         } else if ((op[i] == 'e' && op[i+1] == 'n' && op[i+2] == 't' && op[i+2] == 'i' && op[i+2] == 'e' && op[i+2] == 'r') || (op[i] == 'E' && op[i+1] == 'N' && op[i+2] == 'T' && op[i+2] == 'I' && op[i+2] == 'E' && op[i+2] == 'R')) {
             puts("Fonction ENTIER detecte !");
             Jeton jetonentier;
             jetonentier.lexem = FONCTION;
             jetonentier.fonction = ENTIER;
-            jetons[jeton] = jetonentier;
-            jeton++;
+            jetons[nbJeton] = jetonentier;
+            nbJeton++;
             i = i+6;
         } else if ((op[i] == 'v' && op[i+1] == 'a' && op[i+2] == 'l' && op[i+2] == '_' && op[i+2] == 'n' && op[i+2] == 'e' && op[i+2] == 'g') || (op[i] == 'V' && op[i+1] == 'A' && op[i+2] == 'L' && op[i+2] == '_' && op[i+2] == 'N' && op[i+2] == 'E' && op[i+2] == 'G')) {
             puts("Fonction VAL_NEG detecte !");
             Jeton jetonvalneg;
             jetonvalneg.lexem = FONCTION;
             jetonvalneg.fonction = VAL_NEG;
-            jetons[jeton] = jetonvalneg;
-            jeton++;
+            jetons[nbJeton] = jetonvalneg;
+            nbJeton++;
             i = i+7;
         }
         
@@ -112,15 +112,15 @@ Jeton* analyse_lexical(char* op)  {
             puts("Parenthese ouvrante detecte !");
             Jeton jetonparouvr;
             jetonparouvr.lexem = PAR_OUV;
-            jetons[jeton] = jetonparouvr;
-            jeton++;
+            jetons[nbJeton] = jetonparouvr;
+            nbJeton++;
             i++;
         } else if (op[i] == ')') {
             puts("Parenthese fermante detecte !");
             Jeton jetonparfermr;
             jetonparfermr.lexem = PAR_FERM;
-            jetons[jeton] = jetonparfermr;
-            jeton++;
+            jetons[nbJeton] = jetonparfermr;
+            nbJeton++;
             i++;
         } 
         
@@ -140,9 +140,9 @@ Jeton* analyse_lexical(char* op)  {
             Jeton jetonvar;
             jetonvar.lexem = REEL;
             jetonvar.reel = atof(tabreel);
-            jetons[jeton] = jetonvar;
+            jetons[nbJeton] = jetonvar;
             i+= indice;
-            jeton++;
+            nbJeton++;
         }
         
         //////////////////////// RECHERCHE DES OPERATEURS ////////////////////////
@@ -162,9 +162,9 @@ Jeton* analyse_lexical(char* op)  {
             } else {
                 jetonoperateur.operateur = PUIS;
             }
-            jetons[jeton] = jetonoperateur;
+            jetons[nbJeton] = jetonoperateur;
             i++;
-            jeton++;
+            nbJeton++;
         } 
         
         //////////////////////// RECHERCHE SYMBOLE ABSOLU ////////////////////////
@@ -173,8 +173,8 @@ Jeton* analyse_lexical(char* op)  {
             puts("Absolu detecte !");
             Jeton jetonabsolu;
             jetonabsolu.lexem = ABSOLU;
-            jetons[jeton] = jetonabsolu;
-            jeton++;
+            jetons[nbJeton] = jetonabsolu;
+            nbJeton++;
             i++;
         } else if (isspace(op[i])) {
             puts("Espace detecte !");
@@ -183,8 +183,8 @@ Jeton* analyse_lexical(char* op)  {
             puts("ERREUR");
             Jeton jetonerreur;
             jetonerreur.lexem = ERREUR;
-            jetons[jeton] = jetonerreur;
-            jeton++;
+            jetons[nbJeton] = jetonerreur;
+            nbJeton++;
             i++;
         }
 
@@ -193,9 +193,9 @@ Jeton* analyse_lexical(char* op)  {
     puts("FIN detecte !");
     Jeton jetonfin;
     jetonfin.lexem = FIN;
-    jetonfin.reel = jeton;
-    jetons[jeton] = jetonfin;
-    jeton++;
+    jetonfin.reel = nbJeton;
+    jetons[nbJeton] = jetonfin;
+    nbJeton++;
 
     printf("\nNombre de jetons : %f", jetonfin.reel);
 
