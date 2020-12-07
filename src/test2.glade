@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.36.0 -->
+<interface>
+  <requires lib="gtk+" version="3.22"/>
+  <object class="GtkWindow" id="window">
+    <property name="name">window</property>
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">En-Fonctions-des-Fonctions</property>
+    <property name="default_width">700</property>
+    <property name="default_height">500</property>
+    <child>
+      <object class="GtkBox" id="affi_box">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="affich_name">
+            <property name="name">affich_name</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">center</property>
+            <property name="valign">start</property>
+            <property name="margin_top">70</property>
+            <property name="label" translatable="yes">En Fonction des Fonctions</property>
+            <property name="justify">center</property>
+            <attributes>
+              <attribute name="font-desc" value="System-ui Bold 10"/>
+              <attribute name="scale" value="3"/>
+              <attribute name="foreground" value="#000000000000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="fonction_entry">
+            <property name="height_request">50</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_start">8</property>
+            <property name="margin_end">8</property>
+            <property name="margin_top">80</property>
+            <property name="placeholder_text" translatable="yes">Rentrer votre fonction ici</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="boutton_ok">
+            <property name="label" translatable="yes">OK</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">center</property>
+            <property name="margin_top">100</property>
+            <property name="margin_bottom">8</property>
+            <signal name="clicked" handler="on_boutton_ok_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+</interface>

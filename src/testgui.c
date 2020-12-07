@@ -8,8 +8,8 @@ static char input_function[500];
 const gchar *entry_text;
 
 //Widget Main
-GtkWidget* window; 
-GtkWidget* button; 
+GtkWidget* window;
+GtkWidget* button;
 GtkWidget *hbox;
 GtkWidget *hbox1;
 GtkWidget *hbox2;
@@ -17,17 +17,17 @@ GtkWidget *hbox3;
 GtkWidget *vbox;
 GtkWidget *vbox1;
 GtkWidget *function_label;
-GtkWidget *fonction;
+GtkWidget *name_fonction;
 GtkWidget *function_entry;
 GtkWidget *image;
 
 
 
-void greet(GtkWidget* widget, gpointer data) 
-{ 
+void greet(GtkWidget* widget, gpointer data)
+{
     entry_text = gtk_entry_get_text (GTK_ENTRY (function_entry));
     g_print ("Fonction entrée : %s\n", entry_text);
-    if ( entry_text != "" )   
+    if ( entry_text != "" )
     {
         graph_print(entry_text);
     }
@@ -35,19 +35,20 @@ void greet(GtkWidget* widget, gpointer data)
 
 
 
-void destroy() 
-{ 
+void destroy()
+{
 	gtk_main_quit();
-} 
+}
 
 
 
-int main(int argc, char* argv[]) 
-{ 
-	gtk_init(&argc, &argv); 
-    
+int main(int argc, char* argv[])
+{
+	gtk_init(&argc, &argv);
+
     //Initiation de la fenêtre
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	GdkColor color;
     color.red = 0xffff;
     color.green = 0xffff;
@@ -57,15 +58,43 @@ int main(int argc, char* argv[])
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 500);
     gtk_container_set_border_width(GTK_CONTAINER(window), 20);
 
-	g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL); 
 
-	
+	// gtk3
+	g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL);
+
+	GtkWidget *window, *grid, *calculate;
+
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    grid = gtk_grid_new();
+    gtk_container_add(GTK_CONTAINER(window), grid);
+
+    number1 = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), number1, 0, 0, 1, 1);
+
+    number2 = gtk_entry_new();
+    gtk_grid_attach(GTK_GRID(grid), number2, 1, 0, 1, 1);
+
+    calculate = gtk_button_new_with_label("calculate");
+    g_signal_connect(calculate, "clicked", G_CALLBACK(do_calculate), NULL);
+    gtk_grid_attach(GTK_GRID(grid), calculate, 2, 0, 1, 1);
+
+    result = gtk_label_new("result:");
+    gtk_grid_attach(GTK_GRID(grid), result, 3, 0, 1, 1);
+
+    gtk_widget_show_all(window);
+    gtk_main();
+
+
+	// fin gtk3
+
+
     //Contenu du menu
     function_label = gtk_label_new("FONCTION : ");
     function_entry = gtk_entry_new();
 
     button = gtk_button_new_with_label("OK");
-    g_signal_connect(GTK_OBJECT(button), "clicked", G_CALLBACK(greet), "button"); 
+    g_signal_connect(GTK_OBJECT(button), "clicked", G_CALLBACK(greet), "button");
 
     //Déclaration et positionnement des éléments présents dans la fenêtre
 	hbox = gtk_hbox_new(TRUE, 5);
@@ -82,21 +111,21 @@ int main(int argc, char* argv[])
 
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-	gtk_widget_show_all(window); 
+	gtk_widget_show_all(window);
 
-	gtk_main(); 
+	gtk_main();
 
-	return 0; 
-} 
+	return 0;
+}
 
 
 
 void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpointer data)
 {
 
-    fonction = gtk_label_new(input_f);
+    name_fonction = gtk_label_new(input_f);
 
-    gtk_init(&argc, &argv); 
+    gtk_init(&argc, &argv);
 
     gtk_container_remove(GTK_CONTAINER(window), vbox); // Remove previous window
 
@@ -104,37 +133,36 @@ void graph_print(char input_f[], int argc, char* argv[], GtkWidget* widget, gpoi
     vbox = gtk_vbox_new(FALSE, 30);
     vbox1 = gtk_vbox_new(FALSE, 30);
 
-    gtk_box_pack_start(GTK_BOX(hbox3), fonction, TRUE, FALSE, 10);
+    gtk_box_pack_start(GTK_BOX(hbox3), name_fonction, TRUE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox3, FALSE, FALSE, 5);
 
-    graph_draw();
+    graph_draw(name_fonction);
 
 	//création d'une variable contenant le .PNG
     image = gtk_image_new_from_file ("src/graph.png");
 
-    gtk_box_pack_start(GTK_BOX(vbox), hbox3, FALSE, FALSE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), image, TRUE, FALSE, 10);
+	gtk_box_pack_start(GTK_BOX(vbox), image, TRUE, FALSE, 5);
     gtk_container_add(GTK_CONTAINER(window), vbox);
-
     gtk_widget_show_all(window);
 
 	gtk_main();
 
 	//Fermeture de la fenêtre
-    g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL); 
-    
+    g_signal_connect(window, "destroy", G_CALLBACK(destroy), NULL);
+
 
     return 0;
 }
 
 
-void graph_draw()
+void graph_draw(char name_function)
 {
 
 	//récupération des points de la fonction pour les placer sur le graph
-	double xs [] = {-10, -1, 0, 1, 10};
-	double ys [] = {6, -2, -2, -1, 2};
+	double xs [] = {-2, -1, 0, 1, 2};
+	double ys [] = {2, -1, -2, -1, 2};
 
-	//génération des axes 
+	//génération des axes
 	ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
 	series->xs = xs;
 	series->xsLength = 5;
@@ -159,9 +187,8 @@ void graph_draw()
 	settings->scatterPlotSeries = s;
 	settings->scatterPlotSeriesLength = 1;
 
-	//Génération d'un .PNG qui contient la représentation graphique de la fonction
 	RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
-	DrawScatterPlot(canvasReference, 600, 400, xs, 5, ys, 5);
+	DrawScatterPlotFromSettings(canvasReference, settings);
 
 	size_t length;
 	double *pngdata = ConvertToPNG(&length, canvasReference->image);
