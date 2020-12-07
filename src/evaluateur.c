@@ -25,15 +25,14 @@ char get_cause_evaluateur(){
 float fonc_eval(Arbre A, float x)
 {
     float y, fils_gauche, fils_droit;
-    printf("%d\n",A->jeton.lexem);
+
+
     switch (A->jeton.lexem)
-    {
-        
+    {    
         // Détection d'une fonction        
     case FONCTION:
         printf("fonctyion");
         y = fonc_eval(A->pjetonpreced, x);
-
         switch (A->jeton.valeur.fonction)
         {
         case ABS: // Valeur absolue
@@ -105,13 +104,12 @@ float fonc_eval(Arbre A, float x)
 
         // Détection d'un réel
     case REEL:
-    printf("sdf");
         return A->jeton.valeur.reel;
         break;
 
         // Détection d'une variable
     case VARIABLE:
-        printf("%f",x);
+        printf("%f\n",x);
         return x;
         break;
     }

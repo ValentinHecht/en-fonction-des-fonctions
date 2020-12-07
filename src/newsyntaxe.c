@@ -131,8 +131,8 @@ int is_inPar(int debut[], int fin[], int pos) {
     return 1;
 }
 
-
-void create_tree(Jeton tabJeton[]) {
+/*
+void create_tree(Jeton tabJeton[], int length) {
     Node *arbre;
     Node *NodeActuel;
 
@@ -157,7 +157,6 @@ void create_tree(Jeton tabJeton[]) {
     int var[20];
     int v = 0;
 
-    size_t length = sizeof(tabJeton)/sizeof(tabJeton[0]);
 
     Jeton tab [10][20][length];
 
@@ -205,7 +204,7 @@ void create_tree(Jeton tabJeton[]) {
     // x
     free(arbre);
 }
-
+*/
 Node *syntaxe(Jeton tabJeton[], int elem)
 {
     typejeton jeton;

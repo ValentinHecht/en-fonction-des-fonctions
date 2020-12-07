@@ -173,18 +173,15 @@ int main(int argc, char const *argv[])
         
     
     // 104: double opérande
-    Jeton test104[4]; // test OK
+    Jeton test104[3]; // test OK
     test104[0].lexem = REEL;
     test104[0].reel = 2;
 
     test104[1].lexem = OPERATEUR;
     test104[1].operateur = PLUS;
-
-    test104[2].lexem = OPERATEUR;
-    test104[2].operateur = DIV; 
     
-    test104[3].lexem = REEL;
-    test104[3].reel = 7;
+    test104[2].lexem = REEL;
+    test104[2].reel = 7;
 
     // ERREUR 107 
     // Fontion : '|-5';???
@@ -199,12 +196,12 @@ int main(int argc, char const *argv[])
 
 
 
-    size_t length = sizeof(erreur107)/sizeof(erreur107[0]);
+    size_t length = sizeof(test104)/sizeof(test104[0]);
 
     printf("\n\n");
     
     //arbre  = create_tree(expression, length);
-    arbre  = syntaxe(erreur107, length);
+    arbre  = syntaxe(test104, length);
 
     //syntaxe(graph, length);
     printf("\n\n");
@@ -214,15 +211,13 @@ int main(int argc, char const *argv[])
     float i = borne_min;
     float max = borne_sup;
 
-    
-
+    Arbre test = arbre->pjetonparent;
     if (get_erreur_syntaxe() == 0) // get erre
     {
         for (i; i <= max; i++)
         {
-            
             couples[tab_compteur][0] = i;                       // Valeurs de x
-            couples[tab_compteur][1] = fonc_eval(&arbre, i);  // Valeurs de f(x)
+            couples[tab_compteur][1] = fonc_eval(test, i);  // Valeurs de f(x)
             tab_compteur++;
         }
         for (int y = 0; y < tab_compteur; y++)
