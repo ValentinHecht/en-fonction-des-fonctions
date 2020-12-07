@@ -75,7 +75,9 @@ float fonc_eval(Arbre A, float x)
 
         // Détection d'un opérateur
     case OPERATEUR:
-        printf("sdfsdf");
+        printf("\nsdfsdf\n");
+        printf("\ncouche: %d\n", A->couche);
+        printf("colonne: %d\n", A->colonne);
         fils_gauche = fonc_eval(A->pjetonpreced, x);
         fils_droit = fonc_eval(A->pjetonsuiv, x);
 

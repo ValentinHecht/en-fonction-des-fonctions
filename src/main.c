@@ -203,6 +203,14 @@ int main(int argc, char const *argv[])
     //arbre  = create_tree(expression, length);
     arbre  = syntaxe(test104, length);
 
+    printf("\ncouche: %d\n", arbre->couche);
+    printf("colonne: %d\n", arbre->colonne);
+
+
+
+
+
+
     //syntaxe(graph, length);
     printf("\n\n");
 
@@ -217,7 +225,7 @@ int main(int argc, char const *argv[])
         for (i; i <= max; i++)
         {
             couples[tab_compteur][0] = i;                       // Valeurs de x
-            couples[tab_compteur][1] = fonc_eval(test, i);  // Valeurs de f(x)
+            couples[tab_compteur][1] = fonc_eval(arbre, i);  // Valeurs de f(x)
             tab_compteur++;
         }
         for (int y = 0; y < tab_compteur; y++)

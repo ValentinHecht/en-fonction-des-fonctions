@@ -106,12 +106,6 @@ int contains(Jeton tab[], typejeton jeton, int elem)
         {
             occ++;
         }
-        /*
-        else if (tab[i].operateur == jeton.valeur.operateur)
-        {
-            occ++;
-        }
-        */
     }
 
     return occ;
@@ -131,80 +125,7 @@ int is_inPar(int debut[], int fin[], int pos) {
     return 1;
 }
 
-/*
-void create_tree(Jeton tabJeton[], int length) {
-    Node *arbre;
-    Node *NodeActuel;
 
-    arbre = malloc(sizeof(*arbre));
-
-    int debut_fonction[5];
-    int fin_fonction[5];
-    int df = 0;
-    int ff = 0;
-
-    int debut_parenthese[10];
-    int fin_parenthese[10];
-    int dp = 0;
-    int fp = 0;
-
-    int operande[20];
-    int o = 0;
-
-    int reel[40];
-    int r = 0;
-
-    int var[20];
-    int v = 0;
-
-
-    Jeton tab [10][20][length];
-
-    // Récupère les positions de tout les jetons
-    for (int i = 0; i < length; i++) {
-        if (tabJeton[i].lexem == FONCTION) debut_fonction[df] = i, df++;
-        if (tabJeton[i].lexem == PAR_OUV) debut_parenthese[dp] = i, dp++;
-        if (tabJeton[i].lexem == PAR_FERM) fin_parenthese[fp] = i, fp++;
-        if (tabJeton[i].lexem == PAR_FERM && dp == fp) fin_fonction[ff] = i, ff++;
-
-        if (tabJeton[i].lexem == OPERATEUR) operande[v] = i, o++;
-        if (tabJeton[i].lexem == REEL) reel[v] = i, r++;
-        if (tabJeton[i].lexem == VARIABLE) var[v] = i, v++;
-
-        tab[0][0][i] = tabJeton[i];
-    }
-
-
-    // On crée le premier Node de l'arbre
-    arbre->couche = 0;
-    arbre->colonne = 0;
-    arbre->pjetonparent = -1;
-    // si l'expression ne contient qu'une fonction..
-    if (fin_fonction[0] == length) {
-        arbre->jeton.lexem = tabJeton[debut_fonction[0]].lexem;
-        arbre->jeton.valeur.fonction = tabJeton[debut_fonction[0]].fonction;
-        debut_fonction[0] = -1;
-    }
-    // sinon on prend le premier opérateur
-    else {
-        int i = 0;
-        while (is_inPar(debut_parenthese, fin_parenthese, operande[i]) == 0) {
-            i++;
-        }
-        arbre->jeton.lexem = tabJeton[operande[i]].lexem;
-        arbre->jeton.valeur.operateur = tabJeton[operande[i]].operateur;
-        operande[i] = -1;
-    }
-
-    
-    tab[0][0][1] = tabJeton[1];
-    // sin(x+3)+6
-    // sin(x+3)6
-    // (x+3)6
-    // x
-    free(arbre);
-}
-*/
 Node *syntaxe(Jeton tabJeton[], int elem)
 {
     typejeton jeton;
@@ -300,10 +221,6 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         i++;
     }
 
-
-    //appelle de newsyntaxe
-    //size_t length = sizeof(tabJeton)/sizeof(tabJeton[0]);
-    //printf("%d", length);
 
     printf("\n\n");
     //arbre  = create_tree(expression, length);
