@@ -11,10 +11,10 @@
 #include <ctype.h>
 #include "lexical.h"
 
-int i = 0;
-int nbJeton = 0;
 
 Jeton* analyse_lexical(char* op)  {
+    int i = 0;
+    int nbJeton = 0;
 
     while(op[i] != '\0') {
 
