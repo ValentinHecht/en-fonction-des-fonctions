@@ -80,6 +80,10 @@ float fonc_eval(Arbre A, float x)
         printf("colonne: %d\n", A->colonne);
         fils_gauche = fonc_eval(A->pjetonpreced, x);
         fils_droit = fonc_eval(A->pjetonsuiv, x);
+        printf("\ncouche droit: %d\n", A->pjetonsuiv->jeton.valeur);
+        printf("colonne droit: %d\n", A->pjetonsuiv->jeton.valeur);
+        printf("\ncouche gauche: %d\n", A->pjetonpreced->jeton.valeur);
+        printf("colonne gauche: %d\n", A->pjetonpreced->jeton.valeur);
 
         switch (A->jeton.valeur.operateur)
         {
