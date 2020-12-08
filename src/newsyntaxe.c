@@ -334,6 +334,8 @@ Node *create_Node(Jeton *tabJeton, int elem, int *position) {
             if (tabJeton[j].lexem == REEL) {
                 printf("\nreel\n");
                 Node->jeton.lexem = tabJeton[j].lexem;
+                Node->jeton.valeur.reel = tabJeton[j].reel;
+                printf("\nval: %f", Node->jeton.valeur.reel);
             }
             else if (tabJeton[j].lexem == VARIABLE) {
                 printf("\nvariable\n");

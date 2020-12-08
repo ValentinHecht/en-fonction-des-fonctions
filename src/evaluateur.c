@@ -22,11 +22,24 @@ char get_cause_evaluateur(){
     return &cause[0];
 }
 
-float fonc_eval(Arbre A, float x)
+float fonc_eval(Node *A, float x)
 {
     float y, fils_gauche, fils_droit;
 
+    printf("\ncouche: %d\n", A->couche);
+        printf("colonne: %d\n", A->colonne);
+        printf("lexem: %d\n", A->jeton.lexem);
+        //fils_gauche = fonc_eval(A->pjetonpreced, x);
+        //fils_droit = fonc_eval(A->pjetonsuiv, x);
+        printf("\ncouche droit: %d\n", A->pjetonsuiv->couche);
+        printf("colonne droit: %d\n", A->pjetonsuiv->colonne);
+        printf("lexem droit: %f\n", A->pjetonsuiv->jeton.valeur.reel);
+        printf("\ncouche gauche: %d\n", A->pjetonpreced->couche);
+        printf("colonne gauche: %d\n", A->pjetonpreced->colonne);
+        printf("lexem gauche: %f\n\n", A->pjetonpreced->jeton.valeur.reel);
 
+
+    
     switch (A->jeton.lexem)
     {    
         // Détection d'une fonction        
@@ -75,6 +88,7 @@ float fonc_eval(Arbre A, float x)
 
         // Détection d'un opérateur
     case OPERATEUR:
+    /*
         printf("\nsdfsdf\n");
         printf("\ncouche: %d\n", A->couche);
         printf("colonne: %d\n", A->colonne);
@@ -84,6 +98,7 @@ float fonc_eval(Arbre A, float x)
         printf("colonne droit: %d\n", A->pjetonsuiv->jeton.valeur);
         printf("\ncouche gauche: %d\n", A->pjetonpreced->jeton.valeur);
         printf("colonne gauche: %d\n", A->pjetonpreced->jeton.valeur);
+        */
 
         switch (A->jeton.valeur.operateur)
         {
@@ -119,4 +134,5 @@ float fonc_eval(Arbre A, float x)
         return x;
         break;
     }
+    
 }

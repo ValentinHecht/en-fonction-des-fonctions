@@ -18,7 +18,7 @@
  * 
  * @return : renvoie un tableau de valeur correspondant au couple (abscisse,ordonnée) de la borne inférieur à la borne supérieure
 */
-float fonc_eval(Arbre A, float x);
+float fonc_eval(Node *A, float x);
 
 int get_erreur_evaluateur();
 

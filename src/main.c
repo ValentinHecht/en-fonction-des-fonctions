@@ -200,15 +200,22 @@ int main(int argc, char const *argv[])
 
     printf("\n\n");
     
-    //arbre  = create_tree(expression, length);
     arbre  = syntaxe(test104, length);
 
     printf("\ncouche: %d\n", arbre->couche);
     printf("colonne: %d\n", arbre->colonne);
+    printf("lexem: %d\n", arbre->jeton.lexem);
+    printf("\ncouche gauche: %d\n", arbre->pjetonpreced->couche);
+    printf("colonne gauche: %d\n", arbre->pjetonpreced->colonne);
+    printf("valeur gauche: %f\n", arbre->pjetonpreced->jeton.valeur.reel);
+    printf("\ncouche droit: %d\n", arbre->pjetonsuiv->couche);
+    printf("colonne droit: %d\n", arbre->pjetonsuiv->colonne);
+    printf("valeur droit: %f\n", arbre->pjetonsuiv->jeton.valeur.reel);
 
 
 
-
+//    return 0;
+//}
 
 
     //syntaxe(graph, length);
@@ -216,13 +223,15 @@ int main(int argc, char const *argv[])
 
     printf("\nFin partie syntax\n\n");
 
+    printf("\n-------------------------------------------------------------------------------------------------------------------\n\n");
+
     float i = borne_min;
     float max = borne_sup;
 
-    Arbre test = arbre->pjetonparent;
+    //Arbre *test = arbre->pjetonparent;
     if (get_erreur_syntaxe() == 0) // get erre
     {
-        for (i; i <= max; i++)
+        for (i = 0; i <= 0; i++)
         {
             couples[tab_compteur][0] = i;                       // Valeurs de x
             couples[tab_compteur][1] = fonc_eval(arbre, i);  // Valeurs de f(x)
