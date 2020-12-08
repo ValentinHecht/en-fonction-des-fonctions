@@ -25,35 +25,26 @@ char get_cause_evaluateur(){
 float fonc_eval(Node *A, float x)
 {
     float y, fils_gauche, fils_droit;
-
-    printf("\ncouche: %d\n", A->couche);
-        printf("colonne: %d\n", A->colonne);
-        printf("lexem: %d\n", A->jeton.lexem);
-        //fils_gauche = fonc_eval(A->pjetonpreced, x);
-        //fils_droit = fonc_eval(A->pjetonsuiv, x);
-        printf("\ncouche droit: %d\n", A->pjetonsuiv->couche);
-        printf("colonne droit: %d\n", A->pjetonsuiv->colonne);
-        printf("lexem droit: %f\n", A->pjetonsuiv->jeton.valeur.reel);
-        printf("\ncouche gauche: %d\n", A->pjetonpreced->couche);
-        printf("colonne gauche: %d\n", A->pjetonpreced->colonne);
-        printf("lexem gauche: %f\n\n", A->pjetonpreced->jeton.valeur.reel);
-
-
+    /* printf("%d\n",A->colonne);
+    printf("%d\n",A->couche);
+    printf("%f\n",A->jeton.valeur.fonction); */
     
+    
+
     switch (A->jeton.lexem)
     {    
         // Détection d'une fonction        
     case FONCTION:
-        printf("fonctyion");
         y = fonc_eval(A->pjetonpreced, x);
         switch (A->jeton.valeur.fonction)
         {
         case ABS: // Valeur absolue
-            printf("abs");
+            
             return abs(y);
             break;
 
         case SIN: // Sinus
+            printf("sin\n");
             return sin(y);
             break;
 
@@ -70,6 +61,7 @@ float fonc_eval(Node *A, float x)
             break;
 
         case TAN: // Tangente
+            printf("tan\n");
             return tan(y);
             break;
 
@@ -88,21 +80,15 @@ float fonc_eval(Node *A, float x)
 
         // Détection d'un opérateur
     case OPERATEUR:
-    /*
-        printf("\nsdfsdf\n");
-        printf("\ncouche: %d\n", A->couche);
-        printf("colonne: %d\n", A->colonne);
+    
         fils_gauche = fonc_eval(A->pjetonpreced, x);
         fils_droit = fonc_eval(A->pjetonsuiv, x);
-        printf("\ncouche droit: %d\n", A->pjetonsuiv->jeton.valeur);
-        printf("colonne droit: %d\n", A->pjetonsuiv->jeton.valeur);
-        printf("\ncouche gauche: %d\n", A->pjetonpreced->jeton.valeur);
-        printf("colonne gauche: %d\n", A->pjetonpreced->jeton.valeur);
-        */
+
 
         switch (A->jeton.valeur.operateur)
         {
         case PLUS: // Addition
+            printf("plus\n");
             return fils_gauche + fils_droit;
             break;
 
@@ -111,10 +97,12 @@ float fonc_eval(Node *A, float x)
             break;
 
         case FOIS: // Multiplication
+        printf("fois\n");
             return fils_gauche * fils_droit;
             break;
 
         case DIV: // Division
+            printf("div\n");
             return fils_gauche / fils_droit;
             break;
 
@@ -125,12 +113,13 @@ float fonc_eval(Node *A, float x)
 
         // Détection d'un réel
     case REEL:
+        printf("%f\n", A->jeton.valeur.reel);
         return A->jeton.valeur.reel;
         break;
 
         // Détection d'une variable
     case VARIABLE:
-        printf("%f\n",x);
+    printf("%f\n",x);
         return x;
         break;
     }

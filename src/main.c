@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     // sin(x)
     Jeton fonction[4];
     fonction[0].lexem = FONCTION;
-    fonction[0].fonction = COS;
+    fonction[0].fonction = TAN;
     
     fonction[1].lexem = PAR_OUV;
     fonction[2].lexem = VARIABLE;
@@ -82,7 +82,53 @@ int main(int argc, char const *argv[])
     graph[8].reel = 2;
 
 
-    // sin(x*(x+3)+2)+tan(x+7)
+    // (x*(x+3)+2)+(x+7)
+    Jeton expression2[17];
+    
+
+    expression2[0].lexem = PAR_OUV;
+
+    expression2[1].lexem = VARIABLE;
+
+    expression2[2].lexem = OPERATEUR;
+    expression2[2].operateur = FOIS;
+
+    expression2[3].lexem = PAR_OUV;
+
+    expression2[4].lexem = VARIABLE;
+
+    expression2[5].lexem = OPERATEUR;
+    expression2[5].operateur = PLUS;
+
+    expression2[6].lexem = REEL;
+    expression2[6].reel = 3;
+
+    expression2[7].lexem = PAR_FERM;
+
+    expression2[8].lexem = OPERATEUR;
+    expression2[8].operateur = PLUS;
+
+    expression2[9].lexem = REEL;
+    expression2[9].reel = 2;
+
+    expression2[10].lexem = PAR_FERM;
+
+    expression2[11].lexem = OPERATEUR;
+    expression2[11].operateur = PLUS;
+
+    expression2[12].lexem = PAR_OUV;
+
+    expression2[13].lexem = VARIABLE;
+
+    expression2[14].lexem = OPERATEUR;
+    expression2[14].operateur = PLUS;
+
+    expression2[15].lexem = REEL;
+    expression2[15].reel = 7;
+
+    expression2[16].lexem = PAR_FERM;
+
+
     Jeton expression[19];
     expression[0].lexem = FONCTION;
     expression[0].fonction = SIN;
@@ -118,7 +164,7 @@ int main(int argc, char const *argv[])
     expression[12].operateur = PLUS;
 
     expression[13].lexem = FONCTION;
-    expression[13].fonction = TAN;
+    expression[13].fonction = SIN;
 
     expression[14].lexem = PAR_OUV;
 
@@ -196,26 +242,14 @@ int main(int argc, char const *argv[])
 
 
 
-    size_t length = sizeof(test104)/sizeof(test104[0]);
+    size_t length = sizeof(expression2)/sizeof(expression2[0]);
 
     printf("\n\n");
     
-    arbre  = syntaxe(test104, length);
-
-    printf("\ncouche: %d\n", arbre->couche);
-    printf("colonne: %d\n", arbre->colonne);
-    printf("lexem: %d\n", arbre->jeton.lexem);
-    printf("\ncouche gauche: %d\n", arbre->pjetonpreced->couche);
-    printf("colonne gauche: %d\n", arbre->pjetonpreced->colonne);
-    printf("valeur gauche: %f\n", arbre->pjetonpreced->jeton.valeur.reel);
-    printf("\ncouche droit: %d\n", arbre->pjetonsuiv->couche);
-    printf("colonne droit: %d\n", arbre->pjetonsuiv->colonne);
-    printf("valeur droit: %f\n", arbre->pjetonsuiv->jeton.valeur.reel);
+    arbre  = syntaxe(expression2, length);
 
 
 
-//    return 0;
-//}
 
 
     //syntaxe(graph, length);
@@ -228,10 +262,17 @@ int main(int argc, char const *argv[])
     float i = borne_min;
     float max = borne_sup;
 
+    
+
+    while(arbre->couche!=0){
+        arbre=arbre->pjetonparent;
+    }
+    
+    
     //Arbre *test = arbre->pjetonparent;
     if (get_erreur_syntaxe() == 0) // get erre
     {
-        for (i = 0; i <= 0; i++)
+        for (i; i <= 1; i++)
         {
             couples[tab_compteur][0] = i;                       // Valeurs de x
             couples[tab_compteur][1] = fonc_eval(arbre, i);  // Valeurs de f(x)
