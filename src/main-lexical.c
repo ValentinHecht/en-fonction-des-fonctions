@@ -15,6 +15,10 @@ int main(void)
 {
     printf("Entrez votre fonction : ");
     scanf("%s", operation);
+    printf("Entrez votre premiere borne : ");
+    scanf("%lf", &borneStart);
+    printf("Entrez votre deuxieme borne : ");
+    scanf("%lf", &borneEnd);
 
     analyse_lexical(operation);
 

@@ -8,5 +8,7 @@
 
 #include "jeton.h"
 
+double borneStart, borneEnd;
+
 Jeton* analyse_lexical(char*);
 Jeton jetons[25];

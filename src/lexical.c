@@ -197,6 +197,9 @@ Jeton* analyse_lexical(char* op)  {
     jetons[nbJeton] = jetonfin;
     nbJeton++;
 
+
+    //////////////////////// TEST DU TABLEAU ////////////////////////
+
     printf("\nNombre de jetons : %f", jetonfin.reel);
 
     int test = 0;
