@@ -61,6 +61,7 @@ typedef struct Node{
 typedef struct Jeton {
     typelexem lexem;
     float reel;
+    char var;
     typefonction fonction;
     typeoperateur operateur;
     typeerreur erreur;

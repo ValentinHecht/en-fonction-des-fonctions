@@ -6,22 +6,24 @@
 * FISA-TI23 Copyright 2020-2020
 ********************************************************************************************/
 #include "evaluateur.h"
-
 #include <math.h>
 #include <stdlib.h>
 
 int erreur_eval = 0;
 char *cause[];
 
-int get_erreur_evaluateur(){
+int get_erreur_evaluateur()
+{
     return erreur_eval;
 }
 
-char get_cause_evaluateur(){
+char get_cause_evaluateur()
+{
     return &cause[0];
 }
 
-float fonc_eval(Node *A, float x){
+float fonc_eval(Node *A, float x)
+{
     float y, fils_gauche, fils_droit;
     switch (A->jeton.lexem)
     {    
@@ -35,6 +37,7 @@ float fonc_eval(Node *A, float x){
                     break;
 
                 case SIN: // Sinus
+                    printf("sinus\n");
                     return sin(y);
                     break;
 
@@ -44,6 +47,7 @@ float fonc_eval(Node *A, float x){
 
                 case LOG: // Logarithme
                     return log(y);
+                    break;
                     break;
 
                 case COS: // Cosinus 
@@ -66,6 +70,7 @@ float fonc_eval(Node *A, float x){
                     return y * (-1);
                     break;
             }
+        break;
 
         // Détection d'un opérateur
         case OPERATEUR:
@@ -93,6 +98,7 @@ float fonc_eval(Node *A, float x){
                     return pow(fils_gauche, fils_droit);
                     break;
             }
+        break;
 
         // Détection d'un réel
         case REEL:
@@ -103,6 +109,5 @@ float fonc_eval(Node *A, float x){
         case VARIABLE:
             return x;
             break;
-    }
-    
+    }  
 }

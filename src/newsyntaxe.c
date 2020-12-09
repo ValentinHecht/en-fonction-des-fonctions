@@ -13,7 +13,8 @@ char get_cause_syntaxe()
     return &cause[0];
 }
 
-void init_value(Node *parent, Node *Node, int num) {
+void init_value(Node *parent, Node *Node, int num) 
+{
     Node->pjetonparent = parent;
         if (parent == NULL) 
         {
@@ -37,7 +38,8 @@ void init_value(Node *parent, Node *Node, int num) {
     printf("J'ai la valeur: %d\n\n", Node->jeton.lexem);   
 }
 
-Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
+Node *aller_a(Node *parent, Jeton *expression, int elem, int num) 
+{
     if (parent == NULL || (parent->jeton.lexem != REEL && parent->jeton.lexem != VARIABLE)) 
     {
         if (num == -1) printf("INITIALISATION !\n\n");
@@ -63,7 +65,6 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
             Node->pjetonpreced = create_Node(expression, elem, &position);
             parent = Node;
             Node = Node->pjetonpreced;
-            ///// sin(cos(0)) = 1
         }
             
         for (int i = 0; i < position; i++) 
@@ -87,7 +88,8 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num) {
     }
 }
 
-Node *create_tree_recursive(Jeton *expression, int elem) {
+Node *create_tree_recursive(Jeton *expression, int elem) 
+{
     Node *arbre;
     arbre = malloc(sizeof(*arbre));
     arbre = aller_a(NULL, expression, elem, -1);
@@ -107,7 +109,8 @@ int contains(Jeton tab[], typejeton jeton, int elem)
     return occ;
 }
 
-int is_inPar(int debut[], int fin[], int pos) {
+int is_inPar(int debut[], int fin[], int pos) 
+{
     // On suppose que debut.length == fin.length
     size_t length = sizeof(debut)/sizeof(debut[0]);
     for (int i = 0; i < length; i++) {
