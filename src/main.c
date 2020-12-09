@@ -175,6 +175,16 @@ int main(int argc, char const *argv[])
     erreur107[0].fonction = ABS;
     erreur107[1].lexem = VARIABLE;
 
+
+    //Partie lexicale
+
+    
+
+
+
+
+
+    // Partie syntaxe
     Node *arbre;
     size_t length = sizeof(expression2)/sizeof(expression2[0]);
     printf("\n\n");
