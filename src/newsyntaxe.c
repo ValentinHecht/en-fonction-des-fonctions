@@ -123,11 +123,15 @@ int is_inPar(int debut[], int fin[], int pos)
 }
 
 
-Node *syntaxe(Jeton tabJeton[], int elem)
+Node *syntaxe(Jeton *tabJeton[], int elem)
 {
+    printf("j'entre dans la syntaxe\n");
+    
     typejeton jeton;
-    Node *arbre;
-    arbre = malloc(sizeof(*arbre));
+    printf("igvirebigreigergerbgeburigbui\n");
+    Node *arbre = malloc(sizeof(Node));
+    printf("je créer l'arbre");
+    
     int i = 0;
     // erreur 102-103
     typejeton ouverte;
@@ -152,7 +156,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
     while (i != elem)
     {
         // test erreur 100 (division par 0)
-        if (tabJeton[i].operateur == DIV && tabJeton[i + 1].reel == 0)
+        if (tabJeton[i]->operateur == DIV && tabJeton[i + 1]->reel == 0)
         {
             arbre->jeton.valeur.erreur = DIV_ZERO;
             erreur_syntax = 1;
@@ -181,7 +185,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         }
 
         // test erreur 104 (double opérande)
-        if ((tabJeton[i].lexem == OPERATEUR) && (tabJeton[i + 1].lexem == OPERATEUR))
+        if ((tabJeton[i]->lexem == OPERATEUR) && (tabJeton[i + 1]->lexem == OPERATEUR))
         {
             arbre->jeton.lexem = ERREUR;
             arbre->jeton.valeur.erreur = DOUBLE_OPE;
@@ -200,7 +204,7 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         }            
 
         // test erreur 109 parenthèse fermée à côté d'une parenthèse ouverte
-        if ((tabJeton[i].lexem == PAR_FERM) && (tabJeton[i + 1].lexem == PAR_OUV))
+        if ((tabJeton[i]->lexem == PAR_FERM) && (tabJeton[i + 1]->lexem == PAR_OUV))
         {
             arbre->jeton.valeur.erreur = OPE_PAR;
             erreur_syntax = 1;
@@ -222,16 +226,19 @@ Node *syntaxe(Jeton tabJeton[], int elem)
         printf("%s",cause[0]);
     }
     return arbre;
+    free(arbre);
 }
 
-void init_tab(int tab[], int elem) {
+void init_tab(int tab[], int elem) 
+{
     for (int i = 0; i < elem; i++) 
     {
         tab[i] = -1;
     }
 }
 
-Node *create_Node(Jeton *tabJeton, int elem, int *position) {
+Node *create_Node(Jeton *tabJeton, int elem, int *position) 
+{
     Node *Node;
     printf("\n--------------------------------------\nCreation d'un Node\n--------------------------------------\n");
     Node = malloc(sizeof(*Node));

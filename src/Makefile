@@ -2,8 +2,8 @@ include ../config
 
 all: main
 
-main: main.c newsyntaxe.c evaluateur.c lexical.c supportLib.c pbPlots.c testglade.c
-	$(CC) -o ../grapheur $^ $(LIBS)
+main: main.c newsyntaxe.c evaluateur.c lexical.c graphique.c supportLib.c pbPlots.c 
+	$(CC) -o ../grapheur $^ $(LIBS) -lm -export-dynamic
 	../grapheur
 
 %.o: %.c
