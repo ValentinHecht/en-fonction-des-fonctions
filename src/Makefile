@@ -2,7 +2,7 @@ include ../config
 
 all: main
 
-main: main.c newsyntaxe.c evaluateur.c lexical.c supportLib.c pbPlots.c testglade.c
+main: main.c newsyntaxe.c
 	$(CC) -o ../grapheur $^ $(LIBS)
 	../grapheur
 
