@@ -73,8 +73,7 @@ Enfin, lors de la complétion de l’arbre, nous pouvons facilement savoir notre
 Dans un premier temps, nous envoyons à la partie évaluateur un message d’erreur ainsi que son code erreur si un problème de syntaxe est repéré.
 Dans un second temps, si la fonction entrée par l’utilisateur est correcte, nous construisons l’arbre binaire dans l’ordre préfixe comme expliqué précédemment. Une fois la construction de l’arbre effectuée, nous envoyons à la partie évaluateur l’arbre binaire dans sa totalité. L’arbre binaire peut être parcouru de sa racine vers chacunes de ses feuilles.
 
-
-## Evaluateur :
+## Evaluateur :
 Members : Louis-Marie Bossard & Valentin Hecht
 
 La partie Evaluateur permet de decomposer l'arbre envoyé par la partie syntaxe (apres la vérification des erreurs eventuelles). On execute ensuite des calcul a l'aide de SWTICH afin de détecter les différents lexems de chaque jetons : fonctions, opérateurs, réels ou variables. Nous procédons de la même manière pour différencier les fonctions et opérateurs. Une fois le premier jeton évalué, nous rappelons la fonction de manière récursive afin de traiter tous les jetons. Cette récursivité est possible grâce aux éléments jetons pjetonpreced et pjetonsuiv présents dans les différentes nodes. Les valeurs de x et f(x) sont ensuite envoyées dans un tableau qui permettra a la partie graphique de tracer la courbe.
