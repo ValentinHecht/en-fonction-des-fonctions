@@ -12,8 +12,6 @@
 #include "newsyntaxe.h"
 #include "lexical.h"
 
-
-
 int main(int argc, char const *argv[])
 {
     float couples[200][2];
@@ -21,12 +19,19 @@ int main(int argc, char const *argv[])
     Node Node_1;
     char operation[30];
 
+    
     printf("Entrez votre fonction : ");
     scanf("%s", operation);
     printf("Entrez votre premiere borne : ");
     scanf("%lf", &borneStart);
     printf("Entrez votre deuxieme borne : ");
     scanf("%lf", &borneEnd);
+
+    //Partie graphique entrée fonc
+
+
+
+
 
     //Partie lexicale
     Jeton* jetons_lexi = analyse_lexical(operation);
@@ -69,7 +74,7 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        // print graph et UX
+        // Partie graphe affichage
     }
 
     return 0; 
