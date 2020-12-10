@@ -1,4 +1,5 @@
 # Configuration for make
 CC=gcc
-CFLAGS=-std=c99 -Wall -Wextra -lraylib
+CFLAGS=-g -std=c99 -Wall -Wextra `pkg-config gtk+-3.0 --cflags` `pkg-config gtk+-3.0 --libs`
+LIBS= `pkg-config gtk+-3.0 --cflags` `pkg-config gtk+-3.0 --libs`
 OS=Undef

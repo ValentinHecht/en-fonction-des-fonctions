@@ -1,0 +1,13 @@
+# Directory:
+
+build
+
+# Generated files:
+
+en-fonction-des-fonctions
+config
+*.o
+*.json
+.vscode
+*.vscode
+*.png

@@ -7,10 +7,15 @@
 ********************************************************************************************/
 #include <stdio.h>
 #include <math.h>
+#include <gtk/gtk.h>
 
 #include "evaluateur.h"
 #include "newsyntaxe.h"
 #include "lexical.h"
+#include "pbPlots.h"
+#include "supportLib.h"
+
+
 
 int main(int argc, char const *argv[])
 {
@@ -28,9 +33,35 @@ int main(int argc, char const *argv[])
     scanf("%lf", &borneEnd);
 
     //Partie graphique entrée fonc
+    gtk_init(&argc, &argv);
 
+    builder = gtk_builder_new_from_file("src/test2.glade");
 
+    window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
 
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    //g_signal_connect(window, "", G_CALLBACK(gtk_main_quit), NULL);
+
+    gtk_builder_connect_signals(builder, NULL);
+
+	GdkColor color;
+    color.red = 0xffff;
+    color.green = 0xffff;
+    color.blue = 0xffff;
+    gtk_widget_modify_bg(window, GTK_STATE_NORMAL, &color);
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+
+    borne_basse = GTK_WIDGET(gtk_builder_get_object(builder, "borne_basse"));
+    borne_haute = GTK_WIDGET(gtk_builder_get_object(builder, "borne_haute"));
+    pas_fonction = GTK_WIDGET(gtk_builder_get_object(builder, "pas_fonction"));
+    fonction_entry = GTK_WIDGET(gtk_builder_get_object(builder, "fonction_entry"));
+    boutton1 = GTK_WIDGET(gtk_builder_get_object(builder, "boutton_ok"));
+
+    gtk_widget_show(window);
+
+    gtk_main();
+
+    
 
 
     //Partie lexicale
@@ -68,13 +99,14 @@ int main(int argc, char const *argv[])
     }
 
     // Dans partie graphique
-    if (get_erreur_syntaxe() || get_erreur_evaluateur())
+    if (get_erreur_syntaxe())
     {
         
     }
     else
     {
         // Partie graphe affichage
+        graph_draw(entry_fonction, entry_borne_basse_int, entry_borne_haute_int, entry_pas_fonction_int, 1280, 720);
     }
 
     return 0; 
