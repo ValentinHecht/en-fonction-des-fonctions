@@ -117,7 +117,7 @@ void on_boutton_ok_clicked (GtkButton *b, GtkWidget *window)
     
     //Partie lexicale
     printf("je suis 1\n");
-    Jeton *jetons_lexi = malloc(sizeof(Jeton));
+    Jeton* jetons_lexi = malloc(sizeof(Jeton));
     jetons_lexi = analyse_lexical(entry_fonction);
     printf("je suis 2\n");
     
@@ -128,7 +128,7 @@ void on_boutton_ok_clicked (GtkButton *b, GtkWidget *window)
 
     printf("%d\n", sizeof(Jeton));
 
-    Arbre arbre = malloc(sizeof(Arbre));
+    Arbre *arbre = malloc(sizeof(Arbre));
     printf("tetetsttfefvjzhefvjhve\n");
     arbre = syntaxe(jetons_lexi, get_length_tableau()-1);
 
