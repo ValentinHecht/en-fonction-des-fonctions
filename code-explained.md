@@ -14,7 +14,7 @@ Un jeton est une structure contenant le type de celui-ci (fonction, réél, etc�
 
 Exemple pour la fonction « log(3x) + 2 » :
 
-![image lexi1](tabExplication.png)
+![image lexi1](mdsrc/tabExplication.png)
 
 ## Analyse Syntaxique :
 Members : Lucas Bremard & Benjamin Chane-Law
