@@ -2,7 +2,7 @@ include ../config
 
 all: main
 
-main: main.o newsyntaxe.o
+main: main.c newsyntaxe.c
 	$(CC) -o ../grapheur $^ $(LIBS)
 	../grapheur
 
