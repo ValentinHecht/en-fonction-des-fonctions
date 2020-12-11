@@ -55,6 +55,6 @@ void create_tree(Jeton tabJeton[]);
 
 int is_inPar(int debut[], int fin[], int pos);
 
-void test_erreur(Node *arbre, Jeton tab[]);
+void errors_detection(Jeton tabJeton[], int elem, Node *arbre);
 
 Node *syntaxe(Jeton tabJeton[], int elem);

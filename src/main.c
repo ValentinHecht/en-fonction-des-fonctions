@@ -131,9 +131,6 @@ int main() {
     test109[12].lexem = PAR_FERM;
 
     
-    
-    
-    
     // div zero : cos(x)/0;
     Jeton test_div_zero[6]; // TEST OK
     test_div_zero[0].lexem = FONCTION;
@@ -182,15 +179,14 @@ int main() {
     // 4
 
     // test erreurs 
-    
-    size_t length = sizeof(erreur107)/sizeof(erreur107[0]);
+    size_t length = sizeof(expression)/sizeof(expression[0]);
 
     //printf("%d", length);
 
     printf("\n\n");
     Node *arbre;
     //arbre  = create_tree(expression, length);
-    arbre  = syntaxe(erreur107, length);
+    arbre  = syntaxe(expression, length);
 
 
     //syntaxe(graph, length);
