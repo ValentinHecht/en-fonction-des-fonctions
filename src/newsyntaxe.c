@@ -51,7 +51,7 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num)
         node = create_node(expression, elem, &position);
 
         // ou faire un while
-        if (position == -2)
+        while (position == -2)
         {
             // enlever 3 termes dans expressions
             for (int i = 0; i < elem - 3; i++)
@@ -64,34 +64,25 @@ Node *aller_a(Node *parent, Jeton *expression, int elem, int num)
             init_value(parent, node, num);
 
             // je refais un create node
-            /*
+
             node->pjetonpreced = create_node(expression, elem, &position);
             parent = node;
             node = node->pjetonpreced;
-            */
-            printf("C'est la fin de la fonction\n");
-            node->pjetonpreced = aller_a(node, expression, elem-3, 0);
         }
-        else
+
+        for (int i = 0; i < position; i++)
         {
-            for (int i = 0; i < position; i++)
-            {
-                gauche[i] = expression[i];
-            }
-            for (int j = position + 1, count = 0; j < elem; j++, count++)
-            {
-                droite[count] = expression[j];
-            }
-
-            if (parent != NULL)
-            printf("\nParentVal: %d\n", parent->jeton.lexem);
-            printf("\nActuelVal: %d\n", node);
-
-            init_value(parent, node, num);
-
-            node->pjetonpreced = aller_a(node, gauche, position, 0);
-            node->pjetonsuiv = aller_a(node, droite, elem - position - 1, 1);
+            gauche[i] = expression[i];
         }
+        for (int j = position + 1, count = 0; j < elem; j++, count++)
+        {
+            droite[count] = expression[j];
+        }
+
+        init_value(parent, node, num);
+
+        node->pjetonpreced = aller_a(node, gauche, position, 0);
+        node->pjetonsuiv = aller_a(node, droite, elem - position - 1, 1);
 
         return node;
     }
