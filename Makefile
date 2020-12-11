@@ -1,3 +1,4 @@
+
 all: config
 	@make -C src
 
@@ -8,8 +9,7 @@ unix:
 	@echo "generate Bath config"
 	@echo "# Configuration for make" > config
 	@echo "CC=gcc" >> config
-	@echo "CFLAGS=-g -std=c99 -Wall -Wextra `pkg-config gtk+-3.0 --cflags` `pkg-config gtk+-3.0 --libs` -lm  >> config
-	@echo LIBS= `pkg-config gtk+-3.0 --cflags` `pkg-config gtk+-3.0 --libs` >> config
+	@echo "CFLAGS=-std=c99 -Wall -Wextra " >> config
 	@echo "OS=`uname`"  >> config
 
 windows: 
@@ -18,7 +18,6 @@ windows:
 	@echo OS=Windows >> config
 	@echo CC=gcc >> config
 	@echo CFLAGS=-std=c99 -Wall -Wextra` >> config
-	@echo LIBS= >> config
 
 clean:
 	@make -C src clean

@@ -21,6 +21,7 @@ int get_length_tableau(){
 
 Jeton* analyse_lexical(char* op)  {
     int i = 0;
+    
 
     while(op[i] != '\0') {
 
@@ -212,9 +213,8 @@ Jeton* analyse_lexical(char* op)  {
     while(test != sizeof(jetons)/sizeof(jetons[0])){
         printf("\nTest du tableau | Lexem : %i", jetons[test].lexem);
         test++;
-        
     }
-    printf("\nFIN LEXICAL\n");
+
     return jetons;
 };
 

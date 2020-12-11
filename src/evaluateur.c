@@ -9,6 +9,19 @@
 #include <math.h>
 #include <stdlib.h>
 
+int erreur_eval = 0;
+char *cause[];
+
+int get_erreur_evaluateur()
+{
+    return erreur_eval;
+}
+
+char get_cause_evaluateur()
+{
+    return &cause[0];
+}
+
 float fonc_eval(Node *A, float x)
 {
     float y, fils_gauche, fils_droit;
