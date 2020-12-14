@@ -1,10 +1,12 @@
 include ../config
 
-all: main
+all: lexsyneva graphique
 
-main: main.c newsyntaxe.c evaluateur.c lexical.c
-	$(CC) -o ../grapheur $^ $(LIBS)
-	../grapheur
+lexsyneva: main.c newsyntaxe.c evaluateur.c lexical.c
+	$(CC) -o ../lexsyneva $^ $(LIBS)
+
+graphique: main.c newsyntaxe.c evaluateur.c lexical.c
+	$(CC) -o ../graphique $^ $(LIBS)
 
 %.o: %.c
 	$(CC) -c $< $(CFLAGS)
