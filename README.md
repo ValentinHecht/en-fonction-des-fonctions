@@ -11,3 +11,8 @@ Pour utiliser le programme voici les etapes a suivre :
 - Enfin, cliquez sur OK afin d'afficher la courbe de votre fonction.
 
 Pour saisir une nouvelle fonction, un bouton indiquant <code>Retourner au menu</code> s'affiche en bas de la fenetre.
+
+
+Pour installer gtk 3 sous ubuntu :
+
+- sudo apt-get install libgtk-3-dev
